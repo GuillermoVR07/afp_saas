@@ -6,6 +6,7 @@ import { getPeriodos, createPeriodo, updatePeriodo, deletePeriodo } from '../../
 import Modal from '../../components/Modal';
 import { useNotification } from '../../context/NotificacionContext';
 import { usePermissions } from '../../hooks/usePermissions';
+import HelpButton from '../../components/help/HelpButton'; // Import HelpButton
 
 const PeriodoForm = ({ onSave, onCancel, periodo }) => {
     const [nombre, setNombre] = useState(periodo?.nombre || '');
@@ -128,19 +129,19 @@ export default function PeriodosPresupuestariosList({ onSelectPeriodo }) {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
                 <div className="mb-8 flex justify-between items-center">
                     <div>
-                        <h1 className="text-4xl font-bold text-primary mb-2 flex items-center gap-3">
+                        <h1 className="text-4xl font-bold text-primary mb-2 flex items-center gap-3" data-tour="presupuestos-titulo">
                             <PiggyBank size={40} /> Gestión de Presupuestos
                         </h1>
                         <p className="text-secondary">Administra los períodos presupuestarios y sus partidas.</p>
                     </div>
                     {canManage && (
-                        <button onClick={() => openModal()} className="flex items-center gap-2 bg-accent text-white font-semibold px-4 py-2 rounded-lg hover:bg-opacity-90 transition-transform active:scale-95">
+                        <button onClick={() => openModal()} className="flex items-center gap-2 bg-accent text-white font-semibold px-4 py-2 rounded-lg hover:bg-opacity-90 transition-transform active:scale-95" data-tour="nuevo-periodo-btn">
                             <Plus size={20} /> Nuevo Período
                         </button>
                     )}
                 </div>
 
-                <div className="bg-secondary border border-theme rounded-xl">
+                <div className="bg-secondary border border-theme rounded-xl" data-tour="tabla-periodos">
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm text-left">
                             <thead className="text-xs text-secondary uppercase bg-tertiary">
@@ -161,7 +162,7 @@ export default function PeriodosPresupuestariosList({ onSelectPeriodo }) {
                                     periodos.map(p => {
                                         try {
                                             return (
-                                                <tr key={p?.id} className="border-b border-theme hover:bg-tertiary/40 cursor-pointer" onClick={() => onSelectPeriodo(p)}>
+                                                <tr key={p?.id} className="border-b border-theme hover:bg-tertiary/40 cursor-pointer" onClick={() => onSelectPeriodo(p)} data-tour="periodo-item-view">
                                                     <td className="px-6 py-4 font-medium text-primary">{p?.nombre || 'Sin Nombre'}</td>
                                                     <td className="px-6 py-4 text-secondary flex items-center gap-2">
                                                         <Calendar size={16} />
@@ -171,7 +172,7 @@ export default function PeriodosPresupuestariosList({ onSelectPeriodo }) {
                                                     <td className="px-6 py-4"><StatusBadge status={p?.estado} /></td>
                                                     {canManage && (
                                                         <td className="px-6 py-4">
-                                                            <div className="flex gap-2">
+                                                            <div className="flex gap-2" data-tour="periodo-item-acciones">
                                                                 <button onClick={(e) => { e.stopPropagation(); openModal(p); }} className="p-2 text-blue-400 hover:bg-blue-500/20 rounded-full"><Edit size={16} /></button>
                                                                 <button onClick={(e) => { e.stopPropagation(); handleDelete(p.id); }} className="p-2 text-red-400 hover:bg-red-500/20 rounded-full"><Trash2 size={16} /></button>
                                                             </div>
@@ -199,6 +200,7 @@ export default function PeriodosPresupuestariosList({ onSelectPeriodo }) {
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={selectedPeriodo ? 'Editar Período' : 'Nuevo Período'}>
                 <PeriodoForm onSave={handleSave} onCancel={() => setIsModalOpen(false)} periodo={selectedPeriodo} />
             </Modal>
+            <HelpButton moduleKey="presupuestos" />
         </>
     );
 }

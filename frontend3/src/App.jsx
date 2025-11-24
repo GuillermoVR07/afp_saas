@@ -1,6 +1,6 @@
 // src/App.jsx
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import Layout from './components/Layout';
 import PrivateRoute from './components/PrivateRoute';
@@ -34,48 +34,46 @@ import Settings from './components/Settings';
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Rutas Públicas */}
-        <Route path="/" element={<Navigate to="/subscribe" />} />
-        <Route path="/subscribe" element={<SubscriptionPage />} />
-        <Route path="/payment" element={<PaymentPage />} />
-        <Route path="/login" element={<LoginPage />} />
+    <Routes>
+      {/* Rutas Públicas */}
+      <Route path="/" element={<Navigate to="/subscribe" />} />
+      <Route path="/subscribe" element={<SubscriptionPage />} />
+      <Route path="/payment" element={<PaymentPage />} />
+      <Route path="/login" element={<LoginPage />} />
 
-        {/* Rutas Privadas anidadas dentro del Layout */}
-        <Route 
-          path="/app" 
-          element={<PrivateRoute><Layout /></PrivateRoute>}
-        >
-          <Route index element={<DashboardPage />} />
-          <Route path="dashboard" element={<DashboardPage />} />
-          <Route path="departamentos" element={<DepartamentosList />} />
-          <Route path="activos-fijos" element={<ActivosFijosList />} />
-          <Route path="cargos" element={<CargosList />} />
-          <Route path="empleados" element={<EmpleadosList />} />
-          <Route path="roles" element={<RolesList />} />
-          <Route path="presupuestos" element={<PeriodosPresupuestariosList />} />
-          <Route path="ubicaciones" element={<UbicacionesList />} />
-          <Route path="proveedores" element={<ProveedoresList />} />
-          <Route path="categorias" element={<CategoriasActivosList />} />
-          <Route path="estados" element={<EstadosList />} />
-          <Route path="reportes" element={<ReportesPage />} />
-          <Route path="permisos" element={<PermisosList />} />
-          <Route path="mantenimientos" element={<MantenimientoList />} />
-          <Route path="revalorizaciones" element={<RevalorizacionPage />} />
-          <Route path="depreciaciones" element={<DepreciacionPage />} />
-          <Route path="solicitudes-compra" element={<SolicitudesCompraList />} />
-          <Route path="ordenes-compra" element={<OrdenesCompraList />} />
-          <Route path="suscripcion" element={<SuscripcionPage />} />
-          <Route path="disposiciones" element={<DisposicionList />} />
-          <Route path="settings" element={<Settings />} />
-          {/* Cualquier sub-ruta no encontrada dentro de /app redirige al dashboard */}
-          <Route path="*" element={<Navigate to="/app/dashboard" />} />
-        </Route>
+      {/* Rutas Privadas anidadas dentro del Layout */}
+      <Route 
+        path="/app" 
+        element={<PrivateRoute><Layout /></PrivateRoute>}
+      >
+        <Route index element={<DashboardPage />} />
+        <Route path="dashboard" element={<DashboardPage />} />
+        <Route path="departamentos" element={<DepartamentosList />} />
+        <Route path="activos-fijos" element={<ActivosFijosList />} />
+        <Route path="cargos" element={<CargosList />} />
+        <Route path="empleados" element={<EmpleadosList />} />
+        <Route path="roles" element={<RolesList />} />
+        <Route path="presupuestos" element={<PeriodosPresupuestariosList />} />
+        <Route path="ubicaciones" element={<UbicacionesList />} />
+        <Route path="proveedores" element={<ProveedoresList />} />
+        <Route path="categorias" element={<CategoriasActivosList />} />
+        <Route path="estados" element={<EstadosList />} />
+        <Route path="reportes" element={<ReportesPage />} />
+        <Route path="permisos" element={<PermisosList />} />
+        <Route path="mantenimientos" element={<MantenimientoList />} />
+        <Route path="revalorizaciones" element={<RevalorizacionPage />} />
+        <Route path="depreciaciones" element={<DepreciacionPage />} />
+        <Route path="solicitudes-compra" element={<SolicitudesCompraList />} />
+        <Route path="ordenes-compra" element={<OrdenesCompraList />} />
+        <Route path="suscripcion" element={<SuscripcionPage />} />
+        <Route path="disposiciones" element={<DisposicionList />} />
+        <Route path="settings" element={<Settings />} />
+        {/* Cualquier sub-ruta no encontrada dentro de /app redirige al dashboard */}
+        <Route path="*" element={<Navigate to="/app/dashboard" />} />
+      </Route>
 
-        {/* Ruta para cualquier otra URL no definida */}
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </BrowserRouter>
+      {/* Ruta para cualquier otra URL no definida */}
+      <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
   );
 }

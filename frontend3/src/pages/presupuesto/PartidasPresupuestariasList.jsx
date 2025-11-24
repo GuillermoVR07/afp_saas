@@ -139,24 +139,24 @@ export default function PartidasPresupuestariasList({ periodo, onBack }) {
     return (
         <>
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-                <button onClick={onBack} className="flex items-center gap-2 text-accent mb-4 font-semibold">
+                <button onClick={onBack} className="flex items-center gap-2 text-accent mb-4 font-semibold" data-tour="partidas-back-btn">
                     <ArrowLeft size={18} /> Volver a Períodos
                 </button>
                 <div className="mb-8 flex justify-between items-center">
                     <div>
-                        <h1 className="text-4xl font-bold text-primary mb-2 flex items-center gap-3">
+                        <h1 className="text-4xl font-bold text-primary mb-2 flex items-center gap-3" data-tour="partidas-titulo">
                             <List size={40} /> Partidas para "{periodo.nombre}"
                         </h1>
                         <p className="text-secondary">Gestiona las líneas de gasto para este período.</p>
                     </div>
                     {canManage && (
-                        <button onClick={() => openModal()} className="flex items-center gap-2 bg-accent text-white font-semibold px-4 py-2 rounded-lg hover:bg-opacity-90 transition-transform active:scale-95">
+                        <button onClick={() => openModal()} className="flex items-center gap-2 bg-accent text-white font-semibold px-4 py-2 rounded-lg hover:bg-opacity-90 transition-transform active:scale-95" data-tour="nueva-partida-btn">
                             <Plus size={20} /> Nueva Partida
                         </button>
                     )}
                 </div>
 
-                <div className="bg-secondary border border-theme rounded-xl">
+                <div className="bg-secondary border border-theme rounded-xl" data-tour="tabla-partidas">
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm text-left">
                             <thead className="text-xs text-secondary uppercase bg-tertiary">
@@ -178,7 +178,7 @@ export default function PartidasPresupuestariasList({ periodo, onBack }) {
                                     partidas.map(p => {
                                         const departamento = p?.departamento;
                                             return (
-                                                <tr key={p?.id} className="border-b border-theme hover:bg-tertiary/40">
+                                                <tr key={p?.id} className="border-b border-theme hover:bg-tertiary/40" data-tour="partida-item-view">
                                                     <td className="px-6 py-4 font-medium text-primary">{p?.nombre || 'Sin Nombre'} <span className="text-tertiary font-mono text-xs">{p?.codigo || ''}</span></td>
                                                     <td className="px-6 py-4 text-secondary">{departamento?.nombre || 'N/A'}</td>
                                                     <td className="px-6 py-4 text-green-400 font-mono">{parseFloat(p?.monto_asignado || 0).toLocaleString('es-BO', { style: 'currency', currency: 'BOB' })}</td>
@@ -186,7 +186,7 @@ export default function PartidasPresupuestariasList({ periodo, onBack }) {
                                                     <td className="px-6 py-4 text-blue-400 font-mono">{parseFloat(p?.monto_disponible || 0).toLocaleString('es-BO', { style: 'currency', currency: 'BOB' })}</td>
                                                     {canManage && (
                                                         <td className="px-6 py-4">
-                                                            <div className="flex gap-2">
+                                                            <div className="flex gap-2" data-tour="partida-item-acciones">
                                                                 <button onClick={(e) => { e.stopPropagation(); openModal(p); }} className="p-2 text-blue-400 hover:bg-blue-500/20 rounded-full"><Edit size={16} /></button>
                                                                 <button onClick={(e) => { e.stopPropagation(); handleDelete(p.id); }} className="p-2 text-red-400 hover:bg-red-500/20 rounded-full"><Trash2 size={16} /></button>
                                                             </div>

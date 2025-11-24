@@ -178,6 +178,7 @@ export default function ActivosReport() {
                         onChange={(e) => setQueryInput(e.target.value)}
                         placeholder='Escribe un filtro y presiona Enter (ej: "laptop", "depto: TI", "valor>500")'
                         className="w-full p-3 bg-tertiary rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent"
+                        data-tour="filtro-input"
                     />
                     <button 
                         type="button" 
@@ -190,6 +191,7 @@ export default function ActivosReport() {
                                 : 'bg-tertiary text-primary hover:text-accent'
                             } 
                             disabled:opacity-50 disabled:cursor-not-allowed`}
+                        data-tour="grabar-voz-btn"
                     >
                         <Mic size={20} />
                     </button>
@@ -199,7 +201,7 @@ export default function ActivosReport() {
                 </form>
 
                 {/* Píldoras de Filtro */}
-                <div className="flex flex-wrap gap-2 mb-6 min-h-[38px]">
+                <div className="flex flex-wrap gap-2 mb-6 min-h-[38px]" data-tour="filtros-activos">
                     {filters.map((filter, index) => (
                         <FilterTag key={index} text={filter} onRemove={() => removeFilter(filter)} />
                     ))}
@@ -218,6 +220,7 @@ export default function ActivosReport() {
                     onClick={handleGenerarReporte} 
                     disabled={loadingPreview || filters.length === 0}
                     className="flex items-center justify-center gap-2 w-full md:w-auto bg-accent text-white font-semibold px-6 py-3 rounded-lg hover:bg-opacity-90 transition-transform active:scale-95 disabled:opacity-50"
+                    data-tour="generar-preview-btn"
                 >
                     {loadingPreview ? <Loader className="animate-spin" /> : <FileText size={20} />}
                     Generar Vista Previa
@@ -230,7 +233,7 @@ export default function ActivosReport() {
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
                         <h2 className="text-xl font-semibold text-primary">Resultados ({resultados.length})</h2>
                         {resultados.length > 0 && (
-                            <div className="flex gap-3">
+                            <div className="flex gap-3" data-tour="exportar-reporte-btn">
                                 <button onClick={() => handleExportar('pdf')} disabled={loadingExport} className="flex items-center gap-2 text-sm bg-tertiary text-primary px-4 py-2 rounded-lg hover:bg-opacity-80 disabled:opacity-50">
                                     {loadingExport ? <Loader className="animate-spin w-4 h-4" /> : <FileDown size={16} />} PDF
                                 </button>

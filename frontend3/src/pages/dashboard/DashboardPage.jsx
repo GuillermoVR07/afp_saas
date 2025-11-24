@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, Sector } from 'recharts';
 import { getDashboardData } from '../../api/dataService';
 import { Loader, DollarSign, Archive, AlertTriangle, Wrench, FileText } from 'lucide-react';
+import HelpButton from '../../components/help/HelpButton';
 
 const StatCard = ({ icon, title, value, color, unit }) => (
     <motion.div 
@@ -101,18 +102,18 @@ export default function DashboardPage() {
 
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.7 }}>
-            <h1 className="text-4xl font-bold text-primary mb-8">Dashboard</h1>
+            <h1 className="text-4xl font-bold text-primary mb-8" data-tour="dashboard-titulo">Dashboard</h1>
 
             {/* Stat Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                <StatCard icon={<Archive size={32} />} title="Total de Activos" value={data.total_activos} color="bg-indigo-500/20 text-indigo-400" />
-                <StatCard icon={<DollarSign size={32} />} title="Valor Total de Activos" value={data.valor_total_activos} color="bg-green-500/20 text-green-400" unit="currency" />
-                <StatCard icon={<FileText size={32} />} title="Solicitudes Pendientes" value={data.solicitudes_pendientes} color="bg-yellow-500/20 text-yellow-400" />
+                <StatCard icon={<Archive size={32} />} title="Total de Activos" value={data.total_activos} color="bg-indigo-500/20 text-indigo-400" data-tour="total-activos-card" />
+                <StatCard icon={<DollarSign size={32} />} title="Valor Total de Activos" value={data.valor_total_activos} color="bg-green-500/20 text-green-400" unit="currency" data-tour="valor-activos-card" />
+                <StatCard icon={<FileText size={32} />} title="Solicitudes Pendientes" value={data.solicitudes_pendientes} color="bg-yellow-500/20 text-yellow-400" data-tour="solicitudes-pendientes-card" />
             </div>
 
             {/* Charts */}
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-                <div className="lg:col-span-3 bg-secondary border border-theme rounded-xl p-6">
+                <div className="lg:col-span-3 bg-secondary border border-theme rounded-xl p-6" data-tour="activos-por-estado-chart">
                     <h2 className="text-xl font-semibold text-primary mb-4">Activos por Estado</h2>
                     <ResponsiveContainer width="100%" height={300}>
                         <BarChart data={data.activos_por_estado} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
@@ -125,7 +126,7 @@ export default function DashboardPage() {
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
-                <div className="lg:col-span-2 bg-secondary border border-theme rounded-xl p-6">
+                <div className="lg:col-span-2 bg-secondary border border-theme rounded-xl p-6" data-tour="activos-por-categoria-chart">
                     <h2 className="text-xl font-semibold text-primary mb-4">Activos por Categoría</h2>
                     <ResponsiveContainer width="100%" height={300}>
                         <PieChart>
@@ -149,6 +150,7 @@ export default function DashboardPage() {
                     </ResponsiveContainer>
                 </div>
             </div>
+            <HelpButton moduleKey="dashboard" />
         </motion.div>
     );
 }

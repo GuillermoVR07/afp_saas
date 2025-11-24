@@ -6,6 +6,7 @@ import { getSolicitudesCompra, createSolicitudCompra, decidirSolicitudCompra, ge
 import Modal from '../../components/Modal';
 import { useNotification } from '../../context/NotificacionContext';
 import { usePermissions } from '../../hooks/usePermissions';
+import HelpButton from '../../components/help/HelpButton';
 
 const SolicitudForm = ({ solicitud, onSave, onCancel, departamentos, partidas }) => {
     const [descripcion, setDescripcion] = useState(solicitud?.descripcion || '');
@@ -148,17 +149,17 @@ export default function SolicitudesCompraList() {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
                 <div className="mb-8 flex justify-between items-center">
                     <div>
-                        <h1 className="text-4xl font-bold text-primary mb-2">Solicitudes de Compra</h1>
+                        <h1 className="text-4xl font-bold text-primary mb-2" data-tour="solicitudes-compra-titulo">Solicitudes de Compra</h1>
                         <p className="text-secondary">Inicia y gestiona el proceso de adquisición de nuevos activos.</p>
                     </div>
                     {canManage && (
-                        <button onClick={() => { setEditingSolicitud(null); setIsModalOpen(true); }} className="flex items-center gap-2 bg-accent text-white font-semibold px-4 py-2 rounded-lg hover:bg-opacity-90 transition-transform active:scale-95">
+                        <button onClick={() => { setEditingSolicitud(null); setIsModalOpen(true); }} className="flex items-center gap-2 bg-accent text-white font-semibold px-4 py-2 rounded-lg hover:bg-opacity-90 transition-transform active:scale-95" data-tour="nueva-solicitud-btn">
                             <Plus size={20} /> Nueva Solicitud
                         </button>
                     )}
                 </div>
 
-                <div className="bg-secondary border border-theme rounded-xl">
+                <div className="bg-secondary border border-theme rounded-xl" data-tour="tabla-solicitudes">
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm text-left">
                             <thead className="text-xs text-secondary uppercase bg-tertiary">
@@ -190,7 +191,7 @@ export default function SolicitudesCompraList() {
                                             <td className="px-6 py-4"><StatusBadge status={s.estado} /></td>
                                             <td className="px-6 py-4">
                                                 {s.estado === 'PENDIENTE' && canApprove && (
-                                                    <div className="flex gap-2">
+                                                    <div className="flex gap-2" data-tour="solicitud-item-acciones">
                                                         <button onClick={() => handleOpenDecisionModal(s, 'aprobar')} className="p-2 text-green-500 hover:bg-green-500/10 rounded-full"><Check size={18} /></button>
                                                         <button onClick={() => handleOpenDecisionModal(s, 'rechazar')} className="p-2 text-red-500 hover:bg-red-500/10 rounded-full"><X size={18} /></button>
                                                     </div>
@@ -232,6 +233,7 @@ export default function SolicitudesCompraList() {
                      </div>
                  </Modal>
             )}
+            <HelpButton moduleKey="solicitudesCompra" />
         </>
     );
 }

@@ -5,6 +5,7 @@ import { TrendingDown, Loader, Box, DollarSign, Calendar, Hash, Info, Divide, Pe
 import { getActivosFijos, getDepreciaciones, ejecutarDepreciacion } from '../../api/dataService';
 import { useNotification } from '../../context/NotificacionContext';
 import { usePermissions } from '../../hooks/usePermissions';
+import HelpButton from '../../components/help/HelpButton';
 
 // --- Componentes de UI reutilizables ---
 const FormSelect = ({ label, children, ...props }) => (
@@ -154,13 +155,13 @@ export default function DepreciacionPage() {
     return (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <div className="mb-8">
-                <h1 className="text-4xl font-bold text-primary mb-2">Depreciación de Activos</h1>
+                <h1 className="text-4xl font-bold text-primary mb-2" data-tour="depreciacion-titulo">Depreciación de Activos</h1>
                 <p className="text-secondary">Registra la disminución del valor de los activos por su uso o paso del tiempo.</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-1 space-y-6">
-                    <div className="bg-secondary border border-theme rounded-xl p-6">
+                    <div className="bg-secondary border border-theme rounded-xl p-6" data-tour="selector-activo">
                         <h2 className="text-xl font-semibold text-primary mb-4 flex items-center gap-2"><Box size={20} /> Seleccionar Activo</h2>
                         {loadingActivos ? <Loader className="animate-spin text-accent" /> : (
                             <FormSelect label="Activo Fijo a Depreciar" value={selectedActivoId} onChange={(e) => setSelectedActivoId(e.target.value)}>
@@ -171,14 +172,14 @@ export default function DepreciacionPage() {
                     </div>
 
                     {selectedActivo && (
-                        <div className="bg-secondary border border-theme rounded-xl p-6 animate-in fade-in">
+                        <div className="bg-secondary border border-theme rounded-xl p-6 animate-in fade-in" data-tour="valor-actual-activo">
                             <h3 className="text-lg font-semibold text-primary mb-4">Valor Actual</h3>
                             <p className="text-3xl font-bold text-accent">{parseFloat(selectedActivo.valor_actual).toLocaleString('es-BO', { style: 'currency', currency: 'BOB' })}</p>
                         </div>
                     )}
 
                     {canManage && selectedActivo && (
-                        <form onSubmit={handleEjecutar} className="bg-secondary border border-theme rounded-xl p-6 space-y-4 animate-in fade-in">
+                        <form onSubmit={handleEjecutar} className="bg-secondary border border-theme rounded-xl p-6 space-y-4 animate-in fade-in" data-tour="ejecutar-proceso-form">
                             <h2 className="text-xl font-semibold text-primary mb-2">Ejecutar Depreciación</h2>
                             
                             <div className="space-y-2">
@@ -203,7 +204,7 @@ export default function DepreciacionPage() {
                     )}
                 </div>
 
-                <div className="lg:col-span-2 bg-secondary border border-theme rounded-xl p-6">
+                <div className="lg:col-span-2 bg-secondary border border-theme rounded-xl p-6" data-tour="historial-depreciaciones">
                     <h2 className="text-xl font-semibold text-primary mb-4">Historial de Depreciaciones del Activo</h2>
                     {loadingHistorial ? <div className="flex justify-center items-center h-48"><Loader className="animate-spin text-accent" /></div>
                     : !selectedActivoId ? <p className="text-center text-tertiary py-12">Selecciona un activo para ver su historial.</p>
@@ -233,6 +234,7 @@ export default function DepreciacionPage() {
                     )}
                 </div>
             </div>
+            <HelpButton moduleKey="depreciaciones" />
         </motion.div>
     );
 }

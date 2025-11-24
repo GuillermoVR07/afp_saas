@@ -6,6 +6,7 @@ import { getDisposiciones, createDisposicion, updateDisposicion, deleteDisposici
 import Modal from '../../components/Modal';
 import { useNotification } from '../../context/NotificacionContext';
 import { usePermissions } from '../../hooks/usePermissions';
+import HelpButton from '../../components/help/HelpButton';
 
 const DisposicionForm = ({ disposicion, onSave, onCancel, activos }) => {
     const [formData, setFormData] = useState({
@@ -152,17 +153,17 @@ export default function DisposicionList() {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
                 <div className="mb-8 flex justify-between items-center">
                     <div>
-                        <h1 className="text-4xl font-bold text-primary mb-2">Disposición de Activos</h1>
+                        <h1 className="text-4xl font-bold text-primary mb-2" data-tour="disposicion-titulo">Disposición de Activos</h1>
                         <p className="text-secondary">Listado de activos dados de baja, vendidos o donados.</p>
                     </div>
                     {canManage && (
-                        <button onClick={() => { setEditingDisposicion(null); setIsModalOpen(true); }} className="flex items-center gap-2 bg-accent text-white font-semibold px-4 py-2 rounded-lg hover:bg-opacity-90 transition-transform active:scale-95">
+                        <button onClick={() => { setEditingDisposicion(null); setIsModalOpen(true); }} className="flex items-center gap-2 bg-accent text-white font-semibold px-4 py-2 rounded-lg hover:bg-opacity-90 transition-transform active:scale-95" data-tour="nueva-disposicion-btn">
                             <Plus size={20} /> Nueva Disposición
                         </button>
                     )}
                 </div>
 
-                <div className="bg-secondary border border-theme rounded-xl p-4 min-h-[200px]">
+                <div className="bg-secondary border border-theme rounded-xl p-4 min-h-[200px]" data-tour="tabla-disposiciones">
                     {loading ? (
                         <div className="flex justify-center items-center h-48">
                             <Loader className="animate-spin text-accent w-8 h-8" />
@@ -191,7 +192,7 @@ export default function DisposicionList() {
                                     </div>
                                 )}
                                 {canManage && (
-                                    <div className="flex gap-2 ml-auto">
+                                    <div className="flex gap-2 ml-auto" data-tour="disposicion-item-acciones">
                                         <button onClick={() => { setEditingDisposicion(item); setIsModalOpen(true); }} className="p-2 text-primary hover:text-accent"><Edit size={18} /></button>
                                         <button onClick={() => handleDelete(item.id)} className="p-2 text-primary hover:text-red-500"><Trash2 size={18} /></button>
                                     </div>
@@ -209,6 +210,7 @@ export default function DisposicionList() {
                     <p className="text-red-500 text-center">No tienes permiso para gestionar disposiciones.</p>
                 )}
             </Modal>
+            <HelpButton moduleKey="disposiciones" />
         </>
     );
 }

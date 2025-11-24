@@ -9,6 +9,7 @@ import {
 import Modal from '../../components/Modal';
 import { useNotification } from '../../context/NotificacionContext';
 import { usePermissions } from '../../hooks/usePermissions';
+import HelpButton from '../../components/help/HelpButton';
 
 const OrdenCompraForm = ({ onSave, onCancel, solicitudes, proveedores }) => {
     const [solicitud_id, setSolicitudId] = useState('');
@@ -180,17 +181,17 @@ export default function OrdenesCompraList() {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
                 <div className="mb-8 flex justify-between items-center">
                     <div>
-                        <h1 className="text-4xl font-bold text-primary mb-2">Órdenes de Compra</h1>
+                        <h1 className="text-4xl font-bold text-primary mb-2" data-tour="ordenes-compra-titulo">Órdenes de Compra</h1>
                         <p className="text-secondary">Gestiona las órdenes de compra enviadas a proveedores.</p>
                     </div>
                     {canManage && (
-                        <button onClick={() => setIsCreateModalOpen(true)} className="flex items-center gap-2 bg-accent text-white font-semibold px-4 py-2 rounded-lg hover:bg-opacity-90 transition-transform active:scale-95">
+                        <button onClick={() => setIsCreateModalOpen(true)} className="flex items-center gap-2 bg-accent text-white font-semibold px-4 py-2 rounded-lg hover:bg-opacity-90 transition-transform active:scale-95" data-tour="nueva-orden-btn">
                             <Plus size={20} /> Nueva Orden
                         </button>
                     )}
                 </div>
 
-                <div className="bg-secondary border border-theme rounded-xl">
+                <div className="bg-secondary border border-theme rounded-xl" data-tour="tabla-ordenes">
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm text-left">
                             <thead className="text-xs text-secondary uppercase bg-tertiary">
@@ -219,7 +220,7 @@ export default function OrdenesCompraList() {
                                             <td className="px-6 py-4 text-secondary">{new Date(o.fecha_orden).toLocaleDateString()}</td>
                                             <td className="px-6 py-4"><StatusBadge status={o.estado} /></td>
                                             <td className="px-6 py-4">
-                                                <div className="flex gap-2">
+                                                <div className="flex gap-2" data-tour="orden-item-acciones">
                                                     {o.estado === 'GENERADA' && canManage && (
                                                         <button onClick={() => handleSend(o)} className="flex items-center gap-2 text-xs bg-purple-500/20 text-purple-400 font-semibold px-3 py-1 rounded-full hover:bg-purple-500/30">
                                                             <Send size={14} /> Enviar
@@ -248,6 +249,7 @@ export default function OrdenesCompraList() {
             <Modal isOpen={isReceiveModalOpen} onClose={() => setIsReceiveModalOpen(false)} title="Recibir Activo">
                 <RecibirActivoForm onSave={handleConfirmReceive} onCancel={() => setIsReceiveModalOpen(false)} categorias={categorias} estados={estados} ubicaciones={ubicaciones} />
             </Modal>
+            <HelpButton moduleKey="ordenesCompra" />
         </>
     );
 }

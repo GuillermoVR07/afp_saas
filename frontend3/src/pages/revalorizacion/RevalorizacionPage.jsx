@@ -5,6 +5,7 @@ import { TrendingUp, Loader, Box, DollarSign, Calendar, Hash, Info } from 'lucid
 import { getActivosFijos, getRevalorizaciones, ejecutarRevalorizacion } from '../../api/dataService';
 import { useNotification } from '../../context/NotificacionContext';
 import { usePermissions } from '../../hooks/usePermissions';
+import HelpButton from '../../components/help/HelpButton';
 
 // --- Componentes de UI reutilizables ---
 const FormSelect = ({ label, children, ...props }) => (
@@ -160,17 +161,15 @@ export default function RevalorizacionPage() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             {/* --- Encabezado --- */}
             <div className="mb-8">
-                <h1 className="text-4xl font-bold text-primary mb-2">Revalorización de Activos</h1>
-                <p className="text-secondary">Actualiza el valor de los activos según índices o factores externos.</p>
+                <h1 className="text-4xl font-bold text-primary mb-2" data-tour="revalorizacion-titulo">Revalorización de Activos</h1>                <p className="text-secondary">Actualiza el valor de los activos según índices o factores externos.</p>
             </div>
 
             {/* --- Panel Principal --- */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Columna de Acción */}
                 <div className="lg:col-span-1 space-y-6">
-                    <div className="bg-secondary border border-theme rounded-xl p-6">
-                        <h2 className="text-xl font-semibold text-primary mb-4 flex items-center gap-2"><Box size={20} /> Seleccionar Activo</h2>
-                        {loadingActivos ? (
+                                            <div className="bg-secondary border border-theme rounded-xl p-6" data-tour="selector-activo">
+                                                <h2 className="text-xl font-semibold text-primary mb-4 flex items-center gap-2"><Box size={20} /> Seleccionar Activo</h2>                        {loadingActivos ? (
                             <Loader className="animate-spin text-accent" />
                         ) : (
                             <FormSelect
@@ -185,18 +184,16 @@ export default function RevalorizacionPage() {
                     </div>
 
                     {selectedActivo && (
-                        <div className="bg-secondary border border-theme rounded-xl p-6 animate-in fade-in">
-                            <h3 className="text-lg font-semibold text-primary mb-4">Valor Actual</h3>
-                            <p className="text-3xl font-bold text-accent">
+                                                    <div className="bg-secondary border border-theme rounded-xl p-6 animate-in fade-in" data-tour="valor-actual-activo">
+                                                        <h3 className="text-lg font-semibold text-primary mb-4">Valor Actual</h3>                            <p className="text-3xl font-bold text-accent">
                                 {parseFloat(selectedActivo.valor_actual).toLocaleString('es-BO', { style: 'currency', currency: 'BOB' })}
                             </p>
                         </div>
                     )}
 
-                    {canManage && selectedActivo && (
-                        <form onSubmit={handleEjecutar} className="bg-secondary border border-theme rounded-xl p-6 space-y-4 animate-in fade-in">
-                            <h2 className="text-xl font-semibold text-primary mb-2">Ejecutar Proceso</h2>
-                            
+                                            {canManage && selectedActivo && (
+                                                <form onSubmit={handleEjecutar} className="bg-secondary border border-theme rounded-xl p-6 space-y-4 animate-in fade-in" data-tour="ejecutar-proceso-form">
+                                                    <h2 className="text-xl font-semibold text-primary mb-2">Ejecutar Proceso</h2>                            
                             {/* --- [NUEVO] Selector de Tipo --- */}
                             <div className="space-y-2">
                                 <label className="text-sm font-medium text-secondary">Método de Cálculo</label>
@@ -237,9 +234,8 @@ export default function RevalorizacionPage() {
                 </div>
 
                 {/* Columna de Historial */}
-                <div className="lg:col-span-2 bg-secondary border border-theme rounded-xl p-6">
-                    <h2 className="text-xl font-semibold text-primary mb-4">Historial de Revalorizaciones del Activo</h2>
-                    {loadingHistorial ? (
+                                    <div className="lg:col-span-2 bg-secondary border border-theme rounded-xl p-6" data-tour="historial-revalorizaciones">
+                                        <h2 className="text-xl font-semibold text-primary mb-4">Historial de Revalorizaciones del Activo</h2>                    {loadingHistorial ? (
                         <div className="flex justify-center items-center h-48"><Loader className="animate-spin text-accent" /></div>
                     ) : !selectedActivoId ? (
                         <p className="text-center text-tertiary py-12">Selecciona un activo para ver su historial.</p>
@@ -297,6 +293,7 @@ export default function RevalorizacionPage() {
                     )}
                 </div>
             </div>
+            <HelpButton moduleKey="revalorizaciones" />
         </motion.div>
     );
 }

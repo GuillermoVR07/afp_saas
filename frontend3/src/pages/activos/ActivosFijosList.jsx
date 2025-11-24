@@ -1,7 +1,7 @@
 // src/pages/activos/ActivosFijosList.jsx
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Box, Plus, Edit, Trash2, Loader, DollarSign, Tag, MapPin, CheckSquare, Truck, UploadCloud, QrCode } from 'lucide-react'; // <-- Importa QrCode
+import { Box, Plus, Edit, Trash2, Loader, QrCode } from 'lucide-react';
 import { 
     getActivosFijos, createActivoFijo, updateActivoFijo, deleteActivoFijo,
     getCategoriasActivos, getEstados, getUbicaciones, getProveedores, getDepartamentos
@@ -9,9 +9,10 @@ import {
 import Modal from '../../components/Modal';
 import { useNotification } from '../../context/NotificacionContext';
 import { usePermissions } from '../../hooks/usePermissions'; 
-import apiClient from '../../api/axiosConfig'; // Importar para la URL base
+import apiClient from '../../api/axiosConfig';
+import HelpButton from '../../components/help/HelpButton'; // Importar HelpButton
 
-// --- Componentes de ayuda para el formulario ---
+// --- Componentes de ayuda para el formulario (sin cambios) ---
 const FormInput = ({ label, ...props }) => (
     <div className="flex flex-col">
         <label className="text-sm font-medium text-secondary mb-1.5">{label}</label>
@@ -33,7 +34,6 @@ const FormFileInput = ({ label, onChange, fileName }) => (
     <div className="flex flex-col">
         <label className="text-sm font-medium text-secondary mb-1.5">{label}</label>
         <label className="w-full p-3 bg-tertiary rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent flex items-center justify-center cursor-pointer hover:bg-theme">
-            <UploadCloud size={18} className="mr-2" />
             <span className="text-sm">
                 {fileName ? fileName : 'Seleccionar foto (Opcional)'}
             </span>
@@ -47,8 +47,7 @@ const FormFileInput = ({ label, onChange, fileName }) => (
     </div>
 );
 
-
-// --- Formulario de Activo Fijo ---
+// --- Formulario de Activo Fijo (sin cambios) ---
 const ActivoFijoForm = ({ activo, onSave, onCancel }) => {
     
     const [formData, setFormData] = useState({
@@ -286,19 +285,19 @@ export default function ActivosFijosList() {
     return (
         <>            
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-                <div className="mb-8 flex justify-between items-center">
+                <div className="mb-8 flex justify-between items-center" data-tour="activos-fijos-titulo">
                     <div>
                         <h1 className="text-4xl font-bold text-primary mb-2">Activos Fijos</h1>
                         <p className="text-secondary">Gestiona los bienes y propiedades de tu empresa.</p>
                     </div>                  
                     {canManage && (
-                        <button onClick={openCreateModal} className="flex items-center gap-2 bg-accent text-white font-semibold px-4 py-2 rounded-lg hover:bg-opacity-90 transition-transform active:scale-95">
+                        <button onClick={openCreateModal} className="flex items-center gap-2 bg-accent text-white font-semibold px-4 py-2 rounded-lg hover:bg-opacity-90 transition-transform active:scale-95" data-tour="nuevo-activo-btn">
                             <Plus size={20} /> Nuevo Activo
                         </button>
                     )}
                 </div>
                 
-                <div className="bg-secondary border border-theme rounded-xl p-4">
+                <div className="bg-secondary border border-theme rounded-xl p-4" data-tour="lista-activos">
                     {loading ? (
                         <div className="flex justify-center items-center h-48"><Loader className="animate-spin text-accent" /></div>
                     ) : activos.length === 0 ? (
@@ -309,7 +308,7 @@ export default function ActivosFijosList() {
                                 key={activo.id}
                                 className="flex flex-col md:flex-row items-start p-4 border-b border-theme last:border-b-0 hover:bg-tertiary/60 rounded-lg transition-colors duration-200"
                             >
-                                <div className="p-0 bg-accent bg-opacity-10 rounded-lg mr-4 mb-3 md:mb-0 flex-shrink-0">
+                                <div className="p-0 bg-accent bg-opacity-10 rounded-lg mr-4 mb-3 md:mb-0 flex-shrink-0" data-tour="activo-item-foto">
                                     {activo.foto_activo ? (
                                         <img src={`${apiClient.defaults.baseURL.replace('/api', '')}${activo.foto_activo}`} alt={activo.nombre} className="w-16 h-16 rounded-lg object-cover" />
                                     ) : (
@@ -319,7 +318,7 @@ export default function ActivosFijosList() {
                                     )}
                                 </div>
                                 
-                                <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-4">
+                                <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-4" data-tour="activo-item-info">
                                     {/* Columna 1: Info Principal */}
                                     <div className="space-y-1 col-span-2 sm:col-span-1">
                                         <p className="font-bold text-lg text-primary">{activo.nombre}</p>
@@ -366,7 +365,7 @@ export default function ActivosFijosList() {
                                 </div>
                                 
                                 {canManage && (
-                                    <div className="flex gap-2 ml-auto mt-3 md:mt-0 md:ml-4 self-start">
+                                    <div className="flex gap-2 ml-auto mt-3 md:mt-0 md:ml-4 self-start" data-tour="activo-item-acciones">
                                         <button onClick={() => setQrModal({ isOpen: true, assetId: activo.id, assetName: activo.nombre })} className="p-2 text-primary hover:text-accent" title="Generar QR"><QrCode size={18} /></button>
                                         <button onClick={() => openEditModal(activo)} className="p-2 text-primary hover:text-accent" title="Editar"><Edit size={18} /></button>
                                         <button onClick={() => handleDelete(activo.id)} className="p-2 text-primary hover:text-red-500" title="Eliminar"><Trash2 size={18} /></button>
@@ -402,6 +401,7 @@ export default function ActivosFijosList() {
                     </div>
                 </div>
             </Modal>
+            <HelpButton moduleKey="activosFijos" />
         </>
     );
 }

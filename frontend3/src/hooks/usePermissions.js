@@ -190,7 +190,7 @@ const moduleViewPermissions = {
     'mantenimientos': 'view_mantenimiento',
     'revalorizaciones': 'view_revalorizacion',
     'depreciaciones': 'view_depreciacion',
-    // 'disposiciones': 'view_disposicion', // REMOVED: Custom logic below
+    'disposiciones': 'view_disposicion', 
     'solicitudes_compra': 'view_solicitud_compra',
     'ordenes_compra': 'view_orden_compra',
     'suscripcion': 'view_suscripcion',

@@ -11,6 +11,7 @@ import Modal from '../../components/Modal';
 import { useNotification } from '../../context/NotificacionContext';
 import { usePermissions } from '../../hooks/usePermissions';
 import { useAuth } from '../../context/AuthContext';
+import HelpButton from '../../components/help/HelpButton';
 
 // --- Componentes de ayuda para el formulario ---
 const FormInput = ({ label, ...props }) => (
@@ -305,19 +306,19 @@ export default function MantenimientoList() {
                 {/* --- Encabezado --- */}
                 <div className="mb-8 flex justify-between items-center">
                     <div>
-                        <h1 className="text-4xl font-bold text-primary mb-2">Mantenimientos</h1>
+                        <h1 className="text-4xl font-bold text-primary mb-2" data-tour="mantenimientos-titulo">Mantenimientos</h1>
                         <p className="text-secondary">Gestiona el historial de reparaciones y preventivos.</p>
                     </div>
                     {/* Botón "Nuevo" solo visible para quien tenga permiso 'manage_mantenimiento' */}
                     {canManage && (
-                        <button onClick={openCreateModal} className="flex items-center gap-2 bg-accent text-white font-semibold px-4 py-2 rounded-lg hover:bg-opacity-90 transition-transform active:scale-95">
+                        <button onClick={openCreateModal} className="flex items-center gap-2 bg-accent text-white font-semibold px-4 py-2 rounded-lg hover:bg-opacity-90 transition-transform active:scale-95" data-tour="nuevo-mantenimiento-btn">
                             <Plus size={20} /> Nuevo Registro
                         </button>
                     )}
                 </div>
 
                 {/* --- Lista de Mantenimientos --- */}
-                <div className="bg-secondary border border-theme rounded-xl p-4">
+                <div className="bg-secondary border border-theme rounded-xl p-4" data-tour="lista-mantenimientos">
                     {loading ? (
                         <div className="flex justify-center items-center h-48"><Loader className="animate-spin text-accent" /></div>
                     ) : mantenimientos.length === 0 ? (
@@ -335,6 +336,7 @@ export default function MantenimientoList() {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: index * 0.05 }}
                                     className="flex items-center p-3 border-b border-theme last:border-b-0 hover:bg-tertiary rounded-lg"
+                                    data-tour="mantenimiento-item-info"
                                 >
                                     {/* --- Icono --- */}
                                     <div className="p-3 bg-accent bg-opacity-10 rounded-lg mr-4">
@@ -366,7 +368,7 @@ export default function MantenimientoList() {
                                     </div>
 
                                     {/* --- Botones de Acción (Condicionales) --- */}
-                                    <div className="flex gap-2 ml-4 flex-shrink-0">
+                                    <div className="flex gap-2 ml-4 flex-shrink-0" data-tour="mantenimiento-item-acciones">
                                         {/* Botones Edit/Delete solo para Admin (canManage) */}
                                         {canManage && (
                                             <>
@@ -406,6 +408,7 @@ export default function MantenimientoList() {
                     onCancel={handleCloseUpdateModal}
                 />
             </Modal>
+            <HelpButton moduleKey="mantenimientos" />
         </>
     );
 }
