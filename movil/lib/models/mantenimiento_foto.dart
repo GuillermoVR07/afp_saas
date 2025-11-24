@@ -1,5 +1,7 @@
 // lib/models/mantenimiento_foto.dart
 
+import '../config/constants.dart';
+
 class MantenimientoFoto {
   final String id;
   final String fotoUrl;
@@ -14,9 +16,17 @@ class MantenimientoFoto {
   });
 
   factory MantenimientoFoto.fromJson(Map<String, dynamic> json) {
+    String rawUrl = json['foto'] ?? '';
+    String finalUrl = rawUrl;
+
+    // Si la URL es relativa (empieza con /), la completamos.
+    if (rawUrl.startsWith('/')) {
+      finalUrl = '$serverBaseUrl$rawUrl';
+    }
+
     return MantenimientoFoto(
       id: json['id'],
-      fotoUrl: json['foto'],
+      fotoUrl: finalUrl,
       tipo: json['tipo'] ?? 'PROBLEMA',
       subidoPor: json['subido_por']?['username'],
     );

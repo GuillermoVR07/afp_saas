@@ -106,35 +106,35 @@ class _MantenimientoScreenState extends State<MantenimientoScreen> {
                         ),
                       ],
                     ),
-                    trailing: canManage
-                        ? Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                icon: const Icon(LucideIcons.pencil),
-                                tooltip: 'Editar (Admin)',
-                                onPressed: () {
-                                  showMantenimientoDialog(context, mantenimiento: mantenimiento);
-                                },
-                              ),
-                              IconButton(
-                                icon: Icon(LucideIcons.trash2, color: Theme.of(context).colorScheme.error),
-                                tooltip: 'Eliminar',
-                                onPressed: () {
-                                  _showDeleteConfirmDialog(context, provider, mantenimiento.id);
-                                },
-                              ),
-                            ],
-                          )
-                        : (isAssignedToMe && authProvider.hasPermission('update_assigned_mantenimiento'))
-                          ? IconButton(
-                              icon: const Icon(LucideIcons.check),
-                              tooltip: 'Actualizar Estado de Tarea',
-                              onPressed: () {
-                                _showEmployeeUpdateDialog(context, provider, mantenimiento);
-                              },
-                            )
-                          : null,
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (isAssignedToMe && authProvider.hasPermission('update_assigned_mantenimiento'))
+                          IconButton(
+                            icon: const Icon(LucideIcons.check),
+                            tooltip: 'Actualizar Estado de Tarea',
+                            onPressed: () {
+                              _showEmployeeUpdateDialog(context, provider, mantenimiento);
+                            },
+                          ),
+                        if (canManage) ...[
+                          IconButton(
+                            icon: const Icon(LucideIcons.pencil),
+                            tooltip: 'Editar (Admin)',
+                            onPressed: () {
+                              showMantenimientoDialog(context, mantenimiento: mantenimiento);
+                            },
+                          ),
+                          IconButton(
+                            icon: Icon(LucideIcons.trash2, color: Theme.of(context).colorScheme.error),
+                            tooltip: 'Eliminar',
+                            onPressed: () {
+                              _showDeleteConfirmDialog(context, provider, mantenimiento.id);
+                            },
+                          ),
+                        ],
+                      ],
+                    ),
                   ),
                 );
               },
@@ -156,9 +156,9 @@ class _MantenimientoScreenState extends State<MantenimientoScreen> {
   }
 
   void _showEmployeeUpdateDialog(BuildContext context, MantenimientoProvider provider, Mantenimiento mantenimiento) {
-    // This logic can also be extracted if needed, but for now it's fine here.
     final formKey = GlobalKey<FormState>();
     final notasController = TextEditingController(text: mantenimiento.notasSolucion ?? '');
+    // 1. Inicializar el estado directamente. El valor DEBE existir en la lista de items del Dropdown.
     String estado = mantenimiento.estado;
     final List<XFile> fotosSolucionNuevas = [];
     final imagePicker = ImagePicker();
@@ -174,10 +174,17 @@ class _MantenimientoScreenState extends State<MantenimientoScreen> {
             builder: (BuildContext context, StateSetter setState) {
               
               Future<void> pickImage(ImageSource source) async {
-                final pickedFile = await imagePicker.pickImage(source: source, imageQuality: 80, maxWidth: 1024);
-                if (pickedFile != null) {
+                if (source == ImageSource.camera) {
+                  final pickedFile = await imagePicker.pickImage(source: source, imageQuality: 80, maxWidth: 1024);
+                  if (pickedFile != null) {
+                    setState(() {
+                      fotosSolucionNuevas.add(pickedFile);
+                    });
+                  }
+                } else {
+                  final pickedFiles = await imagePicker.pickMultiImage(imageQuality: 80, maxWidth: 1024);
                   setState(() {
-                    fotosSolucionNuevas.add(pickedFile);
+                    fotosSolucionNuevas.addAll(pickedFiles);
                   });
                 }
               }
@@ -212,14 +219,14 @@ class _MantenimientoScreenState extends State<MantenimientoScreen> {
                 );
               }
 
-              Widget buildPhotoGrid(String title, List<Widget> children) {
+              Widget buildPhotoGrid(String title, List<Widget> children, {bool isExisting = true}) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+                    Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                     const SizedBox(height: 8),
                     children.isEmpty
-                      ? const Text('No hay fotos.', style: TextStyle(fontStyle: FontStyle.italic))
+                      ? Text(isExisting ? 'No hay fotos.' : 'Ninguna seleccionada.', style: const TextStyle(fontStyle: FontStyle.italic, color: Colors.grey))
                       : Wrap(spacing: 8.0, runSpacing: 8.0, children: children),
                     const SizedBox(height: 16),
                   ],
@@ -244,28 +251,34 @@ class _MantenimientoScreenState extends State<MantenimientoScreen> {
 
                       buildPhotoGrid('Fotos de la Solución', [
                         ...mantenimiento.fotosSolucion.map((photo) => Image.network(photo.fotoUrl, width: 80, height: 80, fit: BoxFit.cover)),
+                      ]),
+
+                      buildPhotoGrid('Nuevas Fotos de Solución', [
                         ...fotosSolucionNuevas.map((file) => Stack(
+                          clipBehavior: Clip.none,
                           children: [
                             Image.file(File(file.path), width: 80, height: 80, fit: BoxFit.cover),
                             Positioned(
-                              top: 0, right: 0,
+                              top: -8, right: -8,
                               child: GestureDetector(
                                 onTap: () => setState(() => fotosSolucionNuevas.remove(file)),
-                                child: const CircleAvatar(radius: 12, backgroundColor: Colors.black54, child: Icon(Icons.close, color: Colors.white, size: 16)),
+                                child: const CircleAvatar(radius: 12, backgroundColor: Colors.red, child: Icon(Icons.close, color: Colors.white, size: 14)),
                               ),
                             ),
                           ],
                         )),
-                        GestureDetector(
-                          onTap: () => showPicker(context),
-                          child: Container(
-                            width: 80, height: 80,
-                            color: Colors.grey.shade200,
-                            child: const Center(child: Icon(LucideIcons.camera)),
-                          ),
+                      ], isExisting: false),
+                      
+                      Center(
+                        child: ElevatedButton.icon(
+                          onPressed: () => showPicker(context),
+                          icon: const Icon(LucideIcons.imagePlus),
+                          label: const Text("Añadir Fotos"),
                         ),
-                      ]),
+                      ),
 
+                      const SizedBox(height: 16),
+                      // 2. Asegurarse de que la lista de items contenga TODOS los estados posibles
                       DropdownButtonFormField<String>(
                         value: estado,
                         items: const [

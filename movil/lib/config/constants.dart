@@ -4,6 +4,10 @@
 // IP de tu PC en la red Wi-Fi (ejemplo)
 const String _pcIp = '192.168.3.37'; 
 
-// Asegúrate de usar http si no tienes SSL configurado en Django
-const String apiBaseUrl = 'http://$_pcIp:8000/api';
+// URL base del servidor (sin /api)
+const String serverBaseUrl = 'http://$_pcIp:8000';
+
+// URL de la API (construida desde la base)
+const String apiBaseUrl = '$serverBaseUrl/api';
 //const String apiBaseUrl = 'https://actfijopresupuesto.duckdns.org/api';
+//const String serverBaseUrl = 'https://actfijopresupuesto.duckdns.org';

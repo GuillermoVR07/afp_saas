@@ -47,11 +47,17 @@ class OrdenCompraProvider with ChangeNotifier {
     }
   }
 
-  Future<void> recibirOrden(String id, Map<String, dynamic> activoData) async {
+  Future<ActivoFijo> recibirOrden(String id, Map<String, dynamic> activoData) async {
     try {
-      final updatedOrden = await _apiService.recibirOrden(id, activoData);
-      _updateOrdenInList(updatedOrden);
+      // La API ahora devuelve el ActivoFijo creado.
+      final nuevoActivo = await _apiService.recibirOrden(id, activoData);
+      // Refrescamos la lista de órdenes para que se actualice su estado a 'COMPLETADA'
+      await fetchOrdenes(); 
+      // Devolvemos el activo para que la UI pueda usarlo (ej. para navegar)
+      return nuevoActivo;
     } catch (e) {
+      _error = e.toString();
+      notifyListeners();
       rethrow;
     }
   }

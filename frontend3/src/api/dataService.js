@@ -707,47 +707,75 @@ export const getMantenimientos = async () => {
     return response.data;
 };
 
-export const createMantenimiento = async (data, fotoSolucion) => {
+export const createMantenimiento = async (data, fotosNuevas) => {
     const formData = new FormData();
+    // Agrega los datos de texto
     for (const key in data) {
-        formData.append(key, data[key]);
+        if (data[key] !== null && data[key] !== undefined) {
+            formData.append(key, data[key]);
+        }
     }
-    if (fotoSolucion) {
-        formData.append('foto_solucion', fotoSolucion);
+    // Agrega las fotos nuevas
+    if (fotosNuevas && fotosNuevas.length > 0) {
+        fotosNuevas.forEach(file => {
+            formData.append('fotos_nuevas', file); // El backend espera una lista
+        });
     }
+
     const response = await apiClient.post('/mantenimientos/', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
     });
-    // Log DESPUÉS de éxito
-    await logAction('CREATE: Mantenimiento', { id_creado: response.data.id, activo_id: data.activo_id, tipo: data.tipo });
+    await logAction('CREATE: Mantenimiento', { id_creado: response.data.id, activo_id: data.activo_id });
     return response.data;
 };
 
-export const updateMantenimiento = async (id, data, fotoSolucion) => {
+export const updateMantenimiento = async (id, data, fotosNuevas, deletedPhotos) => {
     const formData = new FormData();
     for (const key in data) {
-        formData.append(key, data[key]);
+        if (data[key] !== null && data[key] !== undefined) {
+            formData.append(key, data[key]);
+        }
     }
-    if (fotoSolucion) {
-        formData.append('foto_solucion', fotoSolucion);
+    if (fotosNuevas && fotosNuevas.length > 0) {
+        fotosNuevas.forEach(file => {
+            formData.append('fotos_nuevas', file);
+        });
     }
+    // Añadir IDs de fotos a eliminar
+    if (deletedPhotos && deletedPhotos.length > 0) {
+        deletedPhotos.forEach(photoId => {
+            formData.append('fotos_a_eliminar', photoId);
+        });
+    }
+    
     const response = await apiClient.patch(`/mantenimientos/${id}/`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
     });
-    // Log DESPUÉS de éxito
     await logAction('UPDATE: Mantenimiento', { id: id, ...data });
     return response.data;
 };
 
 export const deleteMantenimiento = async (id) => {
     await apiClient.delete(`/mantenimientos/${id}/`);
-    // Log DESPUÉS de éxito
     await logAction('DELETE: Mantenimiento', { id: id });
 };
 
-export const actualizarEstadoMantenimiento = async (id, data) => {
-    // data debe ser { estado: 'NUEVO_ESTADO', notas_solucion: 'NUEVAS_NOTAS' }
-    const response = await apiClient.patch(`/mantenimientos/${id}/actualizar-estado/`, data);
+export const actualizarEstadoMantenimiento = async (id, data, fotosSolucion) => {
+    const formData = new FormData();
+    for (const key in data) {
+        if (data[key] !== null && data[key] !== undefined) {
+            formData.append(key, data[key]);
+        }
+    }
+    if (fotosSolucion && fotosSolucion.length > 0) {
+        fotosSolucion.forEach(file => {
+            formData.append('fotos_solucion', file);
+        });
+    }
+    
+    const response = await apiClient.post(`/mantenimientos/${id}/actualizar-estado/`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+    });
     await logAction('UPDATE_STATUS: Mantenimiento', { id: id, ...data });
     return response.data;
 };

@@ -46,21 +46,46 @@ class _RecibirOrdenScreenState extends State<RecibirOrdenScreen> {
 
   Future<void> _submit() async {
     if (_formKey.currentState!.validate()) {
+      // Mostrar un loader
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const Center(child: CircularProgressIndicator());
+        },
+      );
+
       final data = {
         'categoria_id': _selectedCategoriaId,
         'estado_id': _selectedEstadoId,
         'ubicacion_id': _selectedUbicacionId,
-        'vida_util': _vidaUtilController.text,
+        'vida_util': int.tryParse(_vidaUtilController.text) ?? 0,
       };
 
       try {
-        await Provider.of<OrdenCompraProvider>(context, listen: false)
+        final nuevoActivo = await Provider.of<OrdenCompraProvider>(context, listen: false)
             .recibirOrden(widget.orden.id, data);
-        Navigator.of(context).pop();
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Activo recibido y creado con éxito')),
+        
+        // Quitar el loader
+        Navigator.of(context, rootNavigator: true).pop();
+
+        // Navegar a la lista de activos, limpiando el stack y pasando argumentos
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          '/home', 
+          (Route<dynamic> route) => false, // Elimina todas las rutas anteriores
+          arguments: {
+            'initialModule': 'activos_fijos',
+            'highlightedAssetId': nuevoActivo.id,
+          },
         );
+
+        // Mostrar SnackBar en la siguiente pantalla (opcional, más complejo)
+        // Por ahora, la navegación y resaltado es suficiente.
+
       } catch (e) {
+        // Quitar el loader
+        Navigator.of(context, rootNavigator: true).pop();
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error al recibir el activo: ${e.toString()}')),
         );

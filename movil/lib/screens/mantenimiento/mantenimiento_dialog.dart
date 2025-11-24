@@ -11,14 +11,15 @@ import '../../providers/activo_fijo_provider.dart';
 import '../../providers/empleado_provider.dart';
 import '../../models/activo_fijo.dart';
 import '../../models/empleado.dart';
-import '../../models/estado.dart';
 import '../../providers/provider_state.dart';
+import '../../config/constants.dart'; // Importar para la URL base
 
 void showMantenimientoDialog(BuildContext context, {Mantenimiento? mantenimiento, String? initialAssetId}) {
   final provider = Provider.of<MantenimientoProvider>(context, listen: false);
   final isEditing = mantenimiento != null;
   final formKey = GlobalKey<FormState>();
 
+  // --- State Management ---
   String? selectedActivoId = mantenimiento?.activo.id ?? initialAssetId;
   String? selectedEmpleadoId = mantenimiento?.empleadoAsignado?.id;
   String tipo = mantenimiento?.tipo ?? 'CORRECTIVO';
@@ -27,7 +28,9 @@ void showMantenimientoDialog(BuildContext context, {Mantenimiento? mantenimiento
   final notasSolucionController = TextEditingController(text: mantenimiento?.notasSolucion ?? '');
   final costoController = TextEditingController(text: mantenimiento?.costo.toString() ?? '0.0');
 
-  final List<MantenimientoFoto> currentPhotos = List.from(mantenimiento?.fotosProblema ?? []);
+  // --- Refactored Photo State ---
+  final List<MantenimientoFoto> fotosProblema = List.from(mantenimiento?.fotosProblema ?? []);
+  final List<MantenimientoFoto> fotosSolucion = List.from(mantenimiento?.fotosSolucion ?? []);
   final List<XFile> newPhotos = [];
   final List<String> deletedPhotoIds = [];
   final imagePicker = ImagePicker();
@@ -47,17 +50,97 @@ void showMantenimientoDialog(BuildContext context, {Mantenimiento? mantenimiento
         title: Text(isEditing ? 'Editar Mantenimiento' : 'Nuevo Mantenimiento'),
         content: StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
+
+            // --- Widget para la galería de fotos con borrado ---
+            Widget buildPhotoGrid(String title, List<MantenimientoFoto> photos) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  const SizedBox(height: 8),
+                  if (photos.isEmpty)
+                    const Text('No hay fotos.', style: TextStyle(fontStyle: FontStyle.italic, color: Colors.grey))
+                  else
+                    Wrap(
+                      spacing: 8.0,
+                      runSpacing: 8.0,
+                      children: photos.map((photo) => Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Image.network(
+                            photo.fotoUrl, // La URL ya está construida por el modelo
+                            width: 80, height: 80, fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) => Container(width: 80, height: 80, color: Colors.grey.shade300, child: const Icon(LucideIcons.imageOff)),
+                          ),
+                          Positioned(
+                            top: -8,
+                            right: -8,
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  deletedPhotoIds.add(photo.id);
+                                  photos.remove(photo);
+                                });
+                              },
+                              child: const CircleAvatar(
+                                radius: 12,
+                                backgroundColor: Colors.red,
+                                child: Icon(Icons.close, color: Colors.white, size: 14),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )).toList(),
+                    ),
+                  const SizedBox(height: 16),
+                ],
+              );
+            }
+            
+            // --- Widget para mostrar las nuevas fotos a subir ---
+            Widget buildNewPhotosGrid() {
+               if (newPhotos.isEmpty) return const SizedBox.shrink();
+               return Column(
+                 crossAxisAlignment: CrossAxisAlignment.start,
+                 children: [
+                   const Text("Nuevas Fotos a Subir", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                   const SizedBox(height: 8),
+                   Wrap(
+                    spacing: 8.0,
+                    runSpacing: 8.0,
+                    children: newPhotos.map((file) => Stack(
+                       clipBehavior: Clip.none,
+                       children: [
+                         Image.file(File(file.path), width: 80, height: 80, fit: BoxFit.cover),
+                         Positioned(
+                           top: -8,
+                           right: -8,
+                           child: GestureDetector(
+                             onTap: () => setState(() => newPhotos.remove(file)),
+                             child: const CircleAvatar(radius: 12, backgroundColor: Colors.red, child: Icon(Icons.close, color: Colors.white, size: 14)),
+                           ),
+                         ),
+                       ],
+                     )).toList(),
+                   ),
+                   const SizedBox(height: 16),
+                 ],
+               );
+            }
+
+            // --- Lógica para escoger imágenes ---
             Future<void> pickImage(ImageSource source) async {
-              if (newPhotos.length + currentPhotos.length >= 3) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('No se pueden subir más de 3 fotos.'), backgroundColor: Colors.red),
-                );
-                return;
-              }
-              final pickedFile = await imagePicker.pickImage(source: source, imageQuality: 80, maxWidth: 1024);
-              if (pickedFile != null) {
+              if (source == ImageSource.camera) {
+                final pickedFile = await imagePicker.pickImage(source: source, imageQuality: 80, maxWidth: 1024);
+                if (pickedFile != null) {
+                  setState(() {
+                    newPhotos.add(pickedFile);
+                  });
+                }
+              } else {
+                final pickedFiles = await imagePicker.pickMultiImage(imageQuality: 80, maxWidth: 1024);
                 setState(() {
-                  newPhotos.add(pickedFile);
+                  newPhotos.addAll(pickedFiles);
                 });
               }
             }
@@ -92,68 +175,6 @@ void showMantenimientoDialog(BuildContext context, {Mantenimiento? mantenimiento
               );
             }
 
-            Widget photoGrid() {
-              return Wrap(
-                spacing: 8.0,
-                runSpacing: 8.0,
-                children: [
-                  ...currentPhotos.map((photo) => Stack(
-                    children: [
-                      Image.network(photo.fotoUrl, width: 80, height: 80, fit: BoxFit.cover),
-                      Positioned(
-                        top: 0,
-                        right: 0,
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              deletedPhotoIds.add(photo.id);
-                              currentPhotos.remove(photo);
-                            });
-                          },
-                          child: const CircleAvatar(
-                            radius: 12,
-                            backgroundColor: Colors.black54,
-                            child: Icon(Icons.close, color: Colors.white, size: 16),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )),
-                  ...newPhotos.map((file) => Stack(
-                    children: [
-                      Image.file(File(file.path), width: 80, height: 80, fit: BoxFit.cover),
-                      Positioned(
-                        top: 0,
-                        right: 0,
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              newPhotos.remove(file);
-                            });
-                          },
-                          child: const CircleAvatar(
-                            radius: 12,
-                            backgroundColor: Colors.black54,
-                            child: Icon(Icons.close, color: Colors.white, size: 16),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )),
-                  if (newPhotos.length + currentPhotos.length < 3)
-                    GestureDetector(
-                      onTap: () => showPicker(context),
-                      child: Container(
-                        width: 80,
-                        height: 80,
-                        color: Colors.grey.shade200,
-                        child: const Center(child: Icon(LucideIcons.camera)),
-                      ),
-                    ),
-                ],
-              );
-            }
-
             return Form(
               key: formKey,
               child: SingleChildScrollView(
@@ -161,84 +182,40 @@ void showMantenimientoDialog(BuildContext context, {Mantenimiento? mantenimiento
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Consumer<ActivoFijoProvider>(
-                      builder: (context, provider, _) {
-                        if (provider.loadingState == LoadingState.loading) {
-                          return const Center(child: CircularProgressIndicator());
-                        }
-                        
-                        ActivoFijo? preselectedAsset;
-                        if (selectedActivoId != null) {
-                          try {
-                            preselectedAsset = provider.activos.firstWhere((a) => a.id == selectedActivoId);
-                          } catch(e) {
-                            preselectedAsset = null;
-                          }
-                        }
+                    Consumer<ActivoFijoProvider>(builder: (context, provider, _) { /* ... (sin cambios) ... */
+                      if (provider.loadingState == LoadingState.loading) return const Center(child: CircularProgressIndicator());
+                      ActivoFijo? preselectedAsset;
+                      if (selectedActivoId != null) { try { preselectedAsset = provider.activos.firstWhere((a) => a.id == selectedActivoId); } catch(e) { preselectedAsset = null; } }
+                      return DropdownButtonFormField<String>(value: selectedActivoId, hint: const Text('Seleccionar Activo'), items: provider.activos.map((ActivoFijo activo) => DropdownMenuItem<String>(value: activo.id, child: Text(activo.nombre))).toList(), onChanged: initialAssetId != null ? null : (value) { selectedActivoId = value; }, validator: (value) => value == null ? 'Seleccione un activo' : null, disabledHint: preselectedAsset != null ? Text(preselectedAsset.nombre) : const Text('Activo preseleccionado'));
+                    }),
+                    const SizedBox(height: 16),
+                    Consumer<EmpleadoProvider>(builder: (context, provider, _) { /* ... (sin cambios) ... */
+                      if (provider.loadingState == LoadingState.loading) return const Center(child: CircularProgressIndicator());
+                      return DropdownButtonFormField<String>(value: selectedEmpleadoId, hint: const Text('Asignar a Empleado'), items: provider.empleados.map((Empleado empleado) => DropdownMenuItem<String>(value: empleado.id, child: Text(empleado.nombreCompleto))).toList(), onChanged: (value) { selectedEmpleadoId = value; });
+                    }),
+                    const SizedBox(height: 16),
+                    DropdownButtonFormField<String>(value: tipo, items: const [ DropdownMenuItem(value: 'PREVENTIVO', child: Text('Preventivo')), DropdownMenuItem(value: 'CORRECTIVO', child: Text('Correctivo')) ], onChanged: (value) { if (value != null) tipo = value; }, decoration: const InputDecoration(labelText: 'Tipo')),
+                    const SizedBox(height: 16),
+                    TextFormField(controller: descProblemaController, decoration: const InputDecoration(labelText: 'Descripción del Problema'), validator: (value) => (value == null || value.isEmpty) ? 'La descripción es requerida' : null, maxLines: 3),
+                    const SizedBox(height: 16),
+                    TextFormField(controller: notasSolucionController, decoration: const InputDecoration(labelText: 'Notas de la Solución'), maxLines: 3),
+                    const SizedBox(height: 16),
+                    TextFormField(controller: costoController, decoration: const InputDecoration(labelText: 'Costo'), keyboardType: const TextInputType.numberWithOptions(decimal: true)),
+                    const Divider(height: 32),
+                    
+                    // --- Galerías de Fotos Separadas ---
+                    if(isEditing) buildPhotoGrid("Fotos del Problema", fotosProblema),
+                    if(isEditing) buildPhotoGrid("Fotos de la Solución", fotosSolucion),
+                    buildNewPhotosGrid(),
 
-                        return DropdownButtonFormField<String>(
-                          value: selectedActivoId,
-                          hint: const Text('Seleccionar Activo'),
-                          items: provider.activos.map((ActivoFijo activo) {
-                            return DropdownMenuItem<String>(
-                              value: activo.id,
-                              child: Text(activo.nombre),
-                            );
-                          }).toList(),
-                          onChanged: initialAssetId != null ? null : (value) {
-                            selectedActivoId = value;
-                          },
-                          validator: (value) => value == null ? 'Seleccione un activo' : null,
-                          disabledHint: preselectedAsset != null 
-                            ? Text(preselectedAsset.nombre)
-                            : const Text('Activo preseleccionado'),
-                        );
-                      },
+                    // --- Botón para añadir fotos ---
+                    Center(
+                      child: ElevatedButton.icon(
+                        icon: const Icon(LucideIcons.camera),
+                        label: const Text('Añadir Fotos'),
+                        onPressed: () => showPicker(context),
+                      ),
                     ),
-                    const SizedBox(height: 16),
-                    Consumer<EmpleadoProvider>(
-                      builder: (context, provider, _) {
-                        if (provider.loadingState == LoadingState.loading) {
-                          return const Center(child: CircularProgressIndicator());
-                        }
-                        return DropdownButtonFormField<String>(
-                          value: selectedEmpleadoId,
-                          hint: const Text('Asignar a Empleado'),
-                          items: provider.empleados.map((Empleado empleado) {
-                            return DropdownMenuItem<String>(
-                              value: empleado.id,
-                              child: Text(empleado.nombreCompleto),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            selectedEmpleadoId = value;
-                          },
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                    DropdownButtonFormField<String>(
-                      value: tipo,
-                      items: const [
-                        DropdownMenuItem(value: 'PREVENTIVO', child: Text('Preventivo')),
-                        DropdownMenuItem(value: 'CORRECTIVO', child: Text('Correctivo')),
-                      ],
-                      onChanged: (value) {
-                        if (value != null) tipo = value;
-                      },
-                      decoration: const InputDecoration(labelText: 'Tipo'),
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: descProblemaController,
-                      decoration: const InputDecoration(labelText: 'Descripción del Problema'),
-                      validator: (value) => (value == null || value.isEmpty) ? 'La descripción es requerida' : null,
-                      maxLines: 3,
-                    ),
-                    const SizedBox(height: 24),
-                    const Text('Fotos del Problema', style: TextStyle(fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 8),
-                    photoGrid(),
                   ],
                 ),
               ),
@@ -246,10 +223,7 @@ void showMantenimientoDialog(BuildContext context, {Mantenimiento? mantenimiento
           },
         ),
         actions: [
-          TextButton(
-            child: const Text('Cancelar'),
-            onPressed: () => Navigator.of(dialogContext).pop(),
-          ),
+          TextButton(child: const Text('Cancelar'), onPressed: () => Navigator.of(dialogContext).pop()),
           ValueListenableBuilder<bool>(
             valueListenable: isLoading,
             builder: (context, loading, child) {
@@ -257,7 +231,6 @@ void showMantenimientoDialog(BuildContext context, {Mantenimiento? mantenimiento
                 onPressed: loading ? null : () async {
                   if (formKey.currentState!.validate()) {
                     isLoading.value = true;
-                    
                     final data = {
                       'activo_id': selectedActivoId,
                       'empleado_asignado_id': selectedEmpleadoId,
@@ -281,9 +254,7 @@ void showMantenimientoDialog(BuildContext context, {Mantenimiento? mantenimiento
                       if (success) {
                         Navigator.of(dialogContext).pop();
                       } else {
-                        ScaffoldMessenger.of(dialogContext).showSnackBar(
-                           SnackBar(content: Text('Error: ${provider.errorMessage}'), backgroundColor: Colors.red),
-                        );
+                        ScaffoldMessenger.of(dialogContext).showSnackBar(SnackBar(content: Text('Error: ${provider.errorMessage}'), backgroundColor: Colors.red));
                       }
                     }
                   }
@@ -297,4 +268,3 @@ void showMantenimientoDialog(BuildContext context, {Mantenimiento? mantenimiento
     },
   );
 }
-

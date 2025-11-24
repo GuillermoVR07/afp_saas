@@ -511,11 +511,12 @@ class ApiService {
     }
   }
 
-  Future<OrdenCompra> recibirOrden(String id, Map<String, dynamic> data) async {
+  Future<ActivoFijo> recibirOrden(String id, Map<String, dynamic> data) async {
     try {
       final response = await _dio.post('/ordenes-compra/$id/recibir/', data: data);
       await logAction('RECEIVE: OrdenCompra', {'id': response.data['id'], 'activo_creado': response.data['id']});
-      return OrdenCompra.fromJson(response.data);
+      // El backend devuelve el ActivoFijo recién creado, no la OrdenCompra actualizada.
+      return ActivoFijo.fromJson(response.data);
     } on DioException catch (e) {
       throw Exception('Error al recibir la orden: ${e.response?.data?['detail'] ?? e.message}');
     }
@@ -610,10 +611,16 @@ class ApiService {
       for (var file in newPhotos) {
         photoFiles.add(await MultipartFile.fromFile(file.path, filename: file.name));
       }
-      data['fotos_a_eliminar'] = deletedPhotos;
+      
+      // Añadir la lista de fotos a eliminar al mapa de datos
+      if (deletedPhotos.isNotEmpty) {
+        data['fotos_a_eliminar'] = deletedPhotos;
+      }
+
       final formData = FormData.fromMap(data, ListFormat.multiCompatible);
+
       if (photoFiles.isNotEmpty) {
-        formData.files.addAll(photoFiles.map((file) => MapEntry('fotos_nuevas[]', file)));
+        formData.files.addAll(photoFiles.map((file) => MapEntry('fotos_nuevas', file)));
       }
 
       final response = await _dio.patch('/mantenimientos/$id/', data: formData);

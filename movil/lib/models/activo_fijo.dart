@@ -1,5 +1,6 @@
 // movil/lib/models/activo_fijo.dart
-import 'estado.dart'; // Importar el modelo Estado
+import 'estado.dart';
+import '../config/constants.dart'; // Importar para la URL base
 
 class ActivoFijo {
   final String id;
@@ -51,6 +52,15 @@ class ActivoFijo {
   });
 
   factory ActivoFijo.fromJson(Map<String, dynamic> json) {
+    String? rawUrl = json['foto_activo'];
+    String? finalUrl;
+
+    if (rawUrl != null && rawUrl.isNotEmpty && rawUrl.startsWith('/')) {
+      finalUrl = '$serverBaseUrl$rawUrl';
+    } else {
+      finalUrl = rawUrl; // Puede ser ya una URL completa o nula
+    }
+
     return ActivoFijo(
       id: json['id'] ?? '',
       nombre: json['nombre'] ?? '',
@@ -75,7 +85,7 @@ class ActivoFijo {
       proveedorId: json['proveedor'],
       proveedorNombre: json['proveedor_detail']?['nombre'],
       
-      fotoActivoUrl: json['foto_activo'] ?? '',
+      fotoActivoUrl: finalUrl,
     );
   }
 }

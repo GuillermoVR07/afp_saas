@@ -1326,7 +1326,7 @@ class MantenimientoViewSet(BaseTenantViewSet):
     required_manage_permission = 'manage_mantenimiento'
     parser_classes = (JSONParser, MultiPartParser, FormParser) # Añadir parsers para subida de archivos
 
-    @action(detail=True, methods=['patch'], url_path='actualizar-estado')
+    @action(detail=True, methods=['patch', 'post'], url_path='actualizar-estado')
     def actualizar_estado(self, request, pk=None):
         """
         Permite al empleado asignado actualizar estado, notas y subir fotos de solución.

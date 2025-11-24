@@ -1,26 +1,546 @@
-PS C:\Activos Fijos\sprintespecial-con ia\movil> flutter build apk --debug
-Support for Android x86 targets will be removed in the next stable
-release after 3.27. See https://github.com/flutter/flutter/issues/157543
-for details.
-lib/screens/mantenimiento/mantenimiento_screen.dart:131:60: Error: Member not found: 'checkCircle'.
-                              icon: const Icon(LucideIcons.checkCircle), 
-                                                           ^^^^^^^^^^^   
-Target kernel_snapshot_program failed: Exception
+'package:flutter/src/material/
+dropdown.dart': Failed assertion:
+line 1744 pos 10: 'items == null
+||
+        items.isEmpty ||
+        value == null ||
 
+items.where((DropdownMenuItem<T>
+item) => item.value ==
+value).length == 1': There should
+be exactly one item with
+[DropdownButton]'s value:
+PENDIENTE.
+Either zero or 2 or more
+[DropdownMenuItem]s were detected
+with the same value
+See also: https://
+docs.flutter.dev/testing/errors
 
-FAILURE: Build failed with an exception.
+Syncing files to device RMX2111...      I/FLTFireBGExecutor(13266): Creating background FlutterEngine instance, with args: [--enable-dart-profiling]
+Syncing files to device RMX2111...      E/BLASTBufferQueue(13266): [SurfaceView[com.example.movil2/com.example.movil2.MainActivity]#1](f:0,a:4) isEGL=1, mPendingRelease.size()=3, mMaxAcquiredBuffers=5, currentMaxAcquiredBufferCount=2       
+Syncing files to device RMX2111...      W/libc    (13266): Access denied finding property "vendor.debug.forcibly_enable_mtk_ray_tracing"
+Syncing files to device RMX2111...      I/flutter (13266): [IMPORTANT:flutter/shell/platform/android/android_context_vk_impeller.cc(61)] Using the Impeller rendering backend (Vulkan).
+Syncing files to device RMX2111...      D/FLTFireContextHolder(13266): received application context.
+Syncing files to device RMX2111...                                 391ms        
 
-* What went wrong:
-Execution failed for task ':app:compileFlutterBuildDebug'.
-> Process 'command 'C:\flutter\bin\flutter.bat'' finished with non-zero exit value 1
+Flutter run key commands.
+r Hot reload.
+R Hot restart.
+h List all available interactive        
+commands.
+d Detach (terminate "flutter run" but   
+leave application running).
+c Clear the screen
+q Quit (terminate the application on the
+device).
 
-* Try:
-> Run with --stacktrace option to get the stack trace.
-> Run with --info or --debug option to get more log output.
-> Run with --scan to get full insights.
-> Get more help at https://help.gradle.org.
+A Dart VM Service on RMX2111 is
+available at:
+http://127.0.0.1:53500/nuP-52FVs6k=/    
+The Flutter DevTools debugger and       
+profiler on RMX2111 is available at:    
+http://127.0.0.1:9101?uri=http://127.0.0
+.1:53500/nuP-52FVs6k=/
+I/FLTFireMsgService(13266): FlutterFirebaseMessagingBackgroundService started!  
+I/Quality (13266): Skipped: false 13 cost 217.11542 refreshRate 0 processName com.example.movil2
+I/flutter (13266): AuthProvider: Permisos cargados: 10
+I/flutter (13266): User granted permission: AuthorizationStatus.authorized      
+I/flutter (13266): FCM Token: cz87SSfGTSanHQwh9QD-Vc:APA91bGxMwXG3HvnPXZtV2DektugHO_Bhqbk2TfDLgxvcqw0H0JBl-jMt2gYmCbmtjJzy9iyofTxryksVxRuB5q7ddOgT3G6FHTXs4gNtAg6Lzo3Th6Ml8M
+I/flutter (13266): Logging action: {accion: UPDATE: FCMToken, payload: {fcm_token: cz87SSfGTSanHQwh9QD-Vc:APA91bGxMwXG3HvnPXZtV2DektugHO_Bhqbk2TfDLgxvcqw0H0JBl-jMt2gYmCbmtjJzy9iyofTxryksVxRuB5q7ddOgT3G6FHTXs4gNtAg6Lzo3Th6Ml8M}}
+I/flutter (13266): Failed to log action: DioException [bad response]: This exception was thrown because the response has a status code of 400 and RequestOptions.validateStatus was configured to throw for this status code.
+I/flutter (13266): The status code of 400 has the following meaning: "Client error - the request contains bad syntax or cannot be fulfilled"
+I/flutter (13266): Read more about status codes at https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+I/flutter (13266): In order to resolve this exception you typically have either to verify and fix your request code or you have to fix the server code.
+I/flutter (13266):
+I/flutter (13266): AuthProvider: FCM token sent to backend.
+I/flutter (13266): ThemeProvider: Actualizando tema desde AuthProvider. User: elvis
+I/flutter (13266): ThemeProvider: Tema actualizado. Notificando...
+I/flutter (13266): main.dart: Autenticado, mostrando HomeScreen.
+I/flutter (13266): DEBUG: HomeScreen initState()
+I/flutter (13266): DEBUG: didChangeDependencies() - Procesando ruta inicial por primera vez.
+I/flutter (13266): DEBUG: didChangeDependencies() - No se encontraron argumentos de ruta para 'initialModule'.
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'dashboard'       
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'dashboard'       
+E/BLASTBufferQueue(13266): [ViewRootImpl[com.example.movil2/com.example.movil2.MainActivity]#0](f:0,a:2) isEGL=1, mPendingRelease.size()=1, mMaxAcquiredBuffers=5, currentMaxAcquiredBufferCount=2      
+I/flutter (13266): API Service: Raw response data from /notificaciones/: {count: 46, next: http://192.168.3.37:8000/api/notificaciones/?page=2, previous: null, results: [{id: caf816e1-c7ab-4cef-ac8c-09d70b5e9f45, timestamp: 2025-11-23T23:37:16.028664-04:00, mensaje: Se te ha asignado una tarea de mantenimiento (Correctivo) para el activo 'Laptop'., tipo: INFO, leido: true, url_destino: /app/mantenimientos, tipo_display: Info}, {id: 8be4bdfd-d624-4733-a296-bd6c5db4243d, timestamp: 2025-11-23T23:11:15.951715-04:00, mensaje: Se te ha asignado una tarea de mantenimiento (Preventivo) para el activo 'Impresora'., tipo: INFO, leido: true, url_destino: /app/mantenimientos, tipo_display: Info}, {id: 9694986a-ad68-4023-ba1e-72ef9c31b85b, timestamp: 2025-11-23T22:44:48.848440-04:00, mensaje: Se te ha asignado una tarea de mantenimiento (Correctivo) para el activo 'Servidor de Alto Rendimiento Dell PowerEdge R740'., tipo: INFO, leido: true, url_destino: /app/mantenimientos, tipo_display: Info}, {id: a8705dde-0db0-4aa8-bf29-7ae12a051c7d, t
+I/flutter (13266): Notifications fetched: 20, Unread: 0
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'dashboard'       
+D/ProfileInstaller(13266): Installing profile for com.example.movil2
+I/Quality (13266): Skipped: false 4 cost 78.92602 refreshRate 0 processName com.example.movil2
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'dashboard'       
+I/flutter (13266): DEBUG: Notification Tapped - URL: '/app/mantenimientos', PageKey extraído: 'mantenimientos'
+I/flutter (13266): DEBUG: _onNavigate() - Solicitado navegar a: 'mantenimientos'
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'dashboard'       
+I/flutter (13266): DEBUG: _onNavigate() - Ejecutando setState para cambiar a: 'mantenimientos'
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'mantenimientos'  
+I/flutter (13266): API Service: Raw response data from /mantenimientos/: {count: 4, next: null, previous: null, results: [{id: 9149c9ba-63b0-4afc-bc44-d637ab4d2f59, tipo: CORRECTIVO, estado: PENDIENTE, fecha_inicio: 2025-11-23T22:44:48.830086-04:00, fecha_fin: null, descripcion_problema: confirmar, notas_solucion: , costo: 50.00, activo: {id: 88fa70fe-a1e4-477d-ac95-3f733b5560b8, nombre: Servidor de Alto Rendimiento Dell PowerEdge R740, codigo_interno: ACT-49FCA920, fecha_adquisicion: 2025-11-19, valor_actual: 0.00, vida_util: 5, foto_activo: null, categoria_nombre: Servidores, estado_nombre: DADO_DE_BAJA, ubicacion_nombre: Piso 3 - Oficina TI, departamento_nombre: TI, proveedor_nombre: Iris, orden_compra: 49fca920-9fee-4455-b637-2dbd83cbe00c}, empleado_asignado: {id: 89ea881b-fd7e-4578-8d25-b5fbb0f3a150, usuario: {id: 6, username: elvis, first_name: Elvis, last_name: Lopez, email: elvis@gmail.com}, apellido_p: Lopez, apellido_m: Mart}, creado_por: {id: 2, username: admin_innovatech, first_name: Ana, last_name: Gomez, email: a
 
-BUILD FAILED in 14s
-Running Gradle task 'assembleDebug'...                             15,4s 
-Gradle task assembleDebug failed with exit code 1
-PS C:\Activos Fijos\sprintespecial-con ia\movil> 
+══╡ EXCEPTION CAUGHT BY WIDGETS LIBRARY
+╞═══════════════════════════════════════
+════════════════════
+The following assertion was thrown      
+building StatefulBuilder(dirty, state:  
+_StatefulBuilderState#36534):
+There should be exactly one item with   
+[DropdownButton]'s value: PENDIENTE.    
+Either zero or 2 or more
+[DropdownMenuItem]s were detected with  
+the same value
+'package:flutter/src/material/dropdown.d
+art':
+Failed assertion: line 1744 pos 10:     
+'items == null ||
+             items.isEmpty ||
+             value == null ||
+             items.where((DropdownMenuIt
+             em<T> item) => item.value  
+             == value).length == 1'     
+
+The relevant error-causing widget was:  
+  StatefulBuilder
+  StatefulBuilder:file:///C:/Activos%20F
+  ijos/sprintespecial-con%20ia/movil/lib
+  /screens/mantenimiento/mantenimiento_s
+  creen.dart:172:20
+
+When the exception was thrown, this was 
+the stack:
+#2      new DropdownButtonFormField     
+(package:flutter/src/material/dropdown.d
+art:1744:10)
+#3
+_MantenimientoScreenState._showEmployeeU
+pdateDialog.<anonymous
+closure>.<anonymous closure>
+(package:movil/screens/mantenimiento/man
+tenimiento_screen.dart:241:23)
+#4      _StatefulBuilderState.build     
+(package:flutter/src/widgets/basic.dart:
+7992:55)
+#5      StatefulElement.build
+(package:flutter/src/widgets/framework.d
+art:5823:27)
+#6      ComponentElement.performRebuild 
+(package:flutter/src/widgets/framework.d
+art:5715:15)
+#7      StatefulElement.performRebuild  
+(package:flutter/src/widgets/framework.d
+art:5874:11)
+#8      Element.rebuild
+(package:flutter/src/widgets/framework.d
+art:5427:7)
+#9      ComponentElement._firstBuild    
+(package:flutter/src/widgets/framework.d
+art:5697:5)
+#10     StatefulElement._firstBuild     
+(package:flutter/src/widgets/framework.d
+art:5865:11)
+#11     ComponentElement.mount
+(package:flutter/src/widgets/framework.d
+art:5691:5)
+...     Normal element mounting (19     
+frames)
+#30     Element.inflateWidget
+(package:flutter/src/widgets/framework.d
+art:4539:16)
+#31
+MultiChildRenderObjectElement.inflateWid
+get
+(package:flutter/src/widgets/framework.d
+art:7159:36)
+#32
+MultiChildRenderObjectElement.mount     
+(package:flutter/src/widgets/framework.d
+art:7175:32)
+...     Normal element mounting (300    
+frames)
+#332    Element.inflateWidget
+(package:flutter/src/widgets/framework.d
+art:4539:16)
+#333
+MultiChildRenderObjectElement.inflateWid
+get
+(package:flutter/src/widgets/framework.d
+art:7159:36)
+#334    Element.updateChild
+(package:flutter/src/widgets/framework.d
+art:4004:18)
+#335    Element.updateChildren
+(package:flutter/src/widgets/framework.d
+art:4201:11)
+#336
+MultiChildRenderObjectElement.update    
+(package:flutter/src/widgets/framework.d
+art:7192:17)
+#337    Element.updateChild
+(package:flutter/src/widgets/framework.d
+art:3982:15)
+#338    ComponentElement.performRebuild 
+(package:flutter/src/widgets/framework.d
+art:5738:16)
+#339    StatefulElement.performRebuild  
+(package:flutter/src/widgets/framework.d
+art:5874:11)
+#340    Element.rebuild
+(package:flutter/src/widgets/framework.d
+art:5427:7)
+#341    StatefulElement.update
+(package:flutter/src/widgets/framework.d
+art:5899:5)
+#342    Element.updateChild
+(package:flutter/src/widgets/framework.d
+art:3982:15)
+#343    ComponentElement.performRebuild 
+(package:flutter/src/widgets/framework.d
+art:5738:16)
+#344    Element.rebuild
+(package:flutter/src/widgets/framework.d
+art:5427:7)
+#345    ProxyElement.update
+(package:flutter/src/widgets/framework.d
+art:6041:5)
+#346    Element.updateChild
+(package:flutter/src/widgets/framework.d
+art:3982:15)
+#347    ComponentElement.performRebuild 
+(package:flutter/src/widgets/framework.d
+art:5738:16)
+#348    Element.rebuild
+(package:flutter/src/widgets/framework.d
+art:5427:7)
+#349    ProxyElement.update
+(package:flutter/src/widgets/framework.d
+art:6041:5)
+#350    _InheritedNotifierElement.update
+(package:flutter/src/widgets/inherited_n
+otifier.dart:108:11)
+#351    Element.updateChild
+(package:flutter/src/widgets/framework.d
+art:3982:15)
+#352    ComponentElement.performRebuild 
+(package:flutter/src/widgets/framework.d
+art:5738:16)
+#353    StatefulElement.performRebuild  
+(package:flutter/src/widgets/framework.d
+art:5874:11)
+#354    Element.rebuild
+(package:flutter/src/widgets/framework.d
+art:5427:7)
+#355    StatefulElement.update
+(package:flutter/src/widgets/framework.d
+art:5899:5)
+#356    Element.updateChild
+(package:flutter/src/widgets/framework.d
+art:3982:15)
+#357    ComponentElement.performRebuild 
+(package:flutter/src/widgets/framework.d
+art:5738:16)
+#358    Element.rebuild
+(package:flutter/src/widgets/framework.d
+art:5427:7)
+#359    ProxyElement.update
+(package:flutter/src/widgets/framework.d
+art:6041:5)
+#360    _InheritedNotifierElement.update
+(package:flutter/src/widgets/inherited_n
+otifier.dart:108:11)
+#361    Element.updateChild
+(package:flutter/src/widgets/framework.d
+art:3982:15)
+#362    ComponentElement.performRebuild 
+(package:flutter/src/widgets/framework.d
+art:5738:16)
+#363    StatefulElement.performRebuild  
+(package:flutter/src/widgets/framework.d
+art:5874:11)
+#364    Element.rebuild
+(package:flutter/src/widgets/framework.d
+art:5427:7)
+#365    StatefulElement.update
+(package:flutter/src/widgets/framework.d
+art:5899:5)
+#366    Element.updateChild
+(package:flutter/src/widgets/framework.d
+art:3982:15)
+#367    ComponentElement.performRebuild 
+(package:flutter/src/widgets/framework.d
+art:5738:16)
+#368    StatefulElement.performRebuild  
+(package:flutter/src/widgets/framework.d
+art:5874:11)
+#369    Element.rebuild
+(package:flutter/src/widgets/framework.d
+art:5427:7)
+#370    StatefulElement.update
+(package:flutter/src/widgets/framework.d
+art:5899:5)
+#371    Element.updateChild
+(package:flutter/src/widgets/framework.d
+art:3982:15)
+#372
+SingleChildRenderObjectElement.update   
+(package:flutter/src/widgets/framework.d
+art:7015:14)
+#373    Element.updateChild
+(package:flutter/src/widgets/framework.d
+art:3982:15)
+#374
+SingleChildRenderObjectElement.update   
+(package:flutter/src/widgets/framework.d
+art:7015:14)
+#375    Element.updateChild
+(package:flutter/src/widgets/framework.d
+art:3982:15)
+#376    ComponentElement.performRebuild 
+(package:flutter/src/widgets/framework.d
+art:5738:16)
+#377    Element.rebuild
+(package:flutter/src/widgets/framework.d
+art:5427:7)
+#378    ProxyElement.update
+(package:flutter/src/widgets/framework.d
+art:6041:5)
+#379    Element.updateChild
+(package:flutter/src/widgets/framework.d
+art:3982:15)
+#380    ComponentElement.performRebuild 
+(package:flutter/src/widgets/framework.d
+art:5738:16)
+#381    Element.rebuild
+(package:flutter/src/widgets/framework.d
+art:5427:7)
+#382    ProxyElement.update
+(package:flutter/src/widgets/framework.d
+art:6041:5)
+#383    Element.updateChild
+(package:flutter/src/widgets/framework.d
+art:3982:15)
+#384    ComponentElement.performRebuild 
+(package:flutter/src/widgets/framework.d
+art:5738:16)
+#385    StatefulElement.performRebuild  
+(package:flutter/src/widgets/framework.d
+art:5874:11)
+#386    Element.rebuild
+(package:flutter/src/widgets/framework.d
+art:5427:7)
+#387    BuildScope._tryRebuild
+(package:flutter/src/widgets/framework.d
+art:2694:15)
+#388    BuildScope._flushDirtyElements  
+(package:flutter/src/widgets/framework.d
+art:2752:11)
+#389    BuildOwner.buildScope
+(package:flutter/src/widgets/framework.d
+art:3056:18)
+#390    WidgetsBinding.drawFrame        
+(package:flutter/src/widgets/binding.dar
+t:1240:21)
+#391
+RendererBinding._handlePersistentFrameCa
+llback
+(package:flutter/src/rendering/binding.d
+art:495:5)
+#392
+SchedulerBinding._invokeFrameCallback   
+(package:flutter/src/scheduler/binding.d
+art:1438:15)
+#393    SchedulerBinding.handleDrawFrame
+(package:flutter/src/scheduler/binding.d
+art:1351:9)
+#394
+SchedulerBinding._handleDrawFrame       
+(package:flutter/src/scheduler/binding.d
+art:1204:5)
+#395    _invoke
+(dart:ui/hooks.dart:331:13)
+#396    PlatformDispatcher._drawFrame   
+(dart:ui/platform_dispatcher.dart:444:5)
+#397    _drawFrame
+(dart:ui/hooks.dart:303:31)
+(elided 2 frames from class
+_AssertionError)
+
+════════════════════════════════════════
+════════════════════════════════════════
+════════════════════
+
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'mantenimientos'  
+E/flutter (13266): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: Null check operator used on a null value
+E/flutter (13266): #0      _MantenimientoScreenState._showEmployeeUpdateDialog.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:movil/screens/mantenimiento/mantenimiento_screen.dart:274:45)
+E/flutter (13266): #1      _InkResponseState.handleTap (package:flutter/src/material/ink_well.dart:1203:21)
+E/flutter (13266): #2      GestureRecognizer.invokeCallback (package:flutter/src/gestures/recognizer.dart:345:24)       
+E/flutter (13266): #3      TapGestureRecognizer.handleTapUp (package:flutter/src/gestures/tap.dart:737:11)
+E/flutter (13266): #4      BaseTapGestureRecognizer._checkUp (package:flutter/src/gestures/tap.dart:362:5)
+E/flutter (13266): #5      BaseTapGestureRecognizer.handlePrimaryPointer (package:flutter/src/gestures/tap.dart:293:7)  
+E/flutter (13266): #6      PrimaryPointerGestureRecognizer.handleEvent (package:flutter/src/gestures/recognizer.dart:706:9)
+E/flutter (13266): #7      PointerRouter._dispatch (package:flutter/src/gestures/pointer_router.dart:97:12)
+E/flutter (13266): #8      PointerRouter._dispatchEventToRoutes.<anonymous closure> (package:flutter/src/gestures/pointer_router.dart:143:9)
+E/flutter (13266): #9      _LinkedHashMapMixin.forEach (dart:_compact_hash:764:13)
+E/flutter (13266): #10     PointerRouter._dispatchEventToRoutes (package:flutter/src/gestures/pointer_router.dart:141:18)
+E/flutter (13266): #11     PointerRouter.route (package:flutter/src/gestures/pointer_router.dart:131:7)
+E/flutter (13266): #12     GestureBinding.handleEvent (package:flutter/src/gestures/binding.dart:530:19)
+E/flutter (13266): #13     GestureBinding.dispatchEvent (package:flutter/src/gestures/binding.dart:499:22)
+E/flutter (13266): #14     RendererBinding.dispatchEvent (package:flutter/src/rendering/binding.dart:473:11)
+E/flutter (13266): #15     GestureBinding._handlePointerEventImmediately (package:flutter/src/gestures/binding.dart:437:7)
+E/flutter (13266): #16     GestureBinding.handlePointerEvent (package:flutter/src/gestures/binding.dart:394:5)
+E/flutter (13266): #17     GestureBinding._flushPointerEventQueue (package:flutter/src/gestures/binding.dart:341:7)     
+E/flutter (13266): #18     GestureBinding._handlePointerDataPacket (package:flutter/src/gestures/binding.dart:308:9)    
+E/flutter (13266): #19     _invoke1 (dart:ui/hooks.dart:347:13)
+E/flutter (13266): #20     PlatformDispatcher._dispatchPointerDataPacket (dart:ui/platform_dispatcher.dart:467:7)       
+E/flutter (13266): #21     _dispatchPointerDataPacket (dart:ui/hooks.dart:282:31)
+E/flutter (13266):
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'mantenimientos'  
+D/OplusSystemUINavigationGesture(13266): [GESTURE_BUTTON] swipe from 1
+D/OplusSystemUINavigationGesture(13266): [GESTURE_BUTTON] Hit Gesture Region !  
+I/Quality (13266): Skipped: false 2 cost 45.95343 refreshRate 0 processName com.example.movil2
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'mantenimientos'  
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'mantenimientos'  
+I/Quality (13266): Skipped: false 1 cost 19.91472 refreshRate 0 processName com.example.movil2
+I/flutter (13266): ApiService: FCM token unregistered from backend.
+I/flutter (13266): AuthProvider: FCM token unregistered from backend on logout. 
+I/flutter (13266): AuthProvider: Sesión cerrada.
+I/flutter (13266): ThemeProvider: Actualizando tema desde AuthProvider. User: null
+I/flutter (13266): ThemeProvider: Tema actualizado. Notificando...
+I/flutter (13266): main.dart: No autenticado, mostrando LoginScreen.
+I/Quality (13266): Skipped: false 3 cost 66.251205 refreshRate 0 processName com.example.movil2
+D/InputMethodManager(13266): showSoftInput() view=io.flutter.embedding.android.FlutterView{6482eb1 VFE...... .F....ID 0,0-1080,2358 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+I/Quality (13266): Skipped: false 2 cost 38.931072 refreshRate 0 processName com.example.movil2
+E/BLASTBufferQueue(13266): [ViewRootImpl[com.example.movil2/com.example.movil2.MainActivity]#0](f:0,a:3) isEGL=1, mPendingRelease.size()=2, mMaxAcquiredBuffers=5, currentMaxAcquiredBufferCount=2      
+D/InputConnectionAdaptor(13266): The input method toggled cursor monitoring on  
+D/InsetsController(13266): show(ime(), fromIme=true)
+E/BLASTBufferQueue(13266): [ViewRootImpl[com.example.movil2/com.example.movil2.MainActivity]#0](f:0,a:5) isEGL=1, mPendingRelease.size()=3, mMaxAcquiredBuffers=5, currentMaxAcquiredBufferCount=2      
+I/Quality (13266): Skipped: true 1 cost 17.786646 refreshRate 0 processName com.example.movil2
+D/InputMethodManager(13266): showSoftInput() view=io.flutter.embedding.android.FlutterView{6482eb1 VFE...... .F...... 0,0-1080,2358 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+D/InputConnectionAdaptor(13266): The input method toggled cursor monitoring on  
+D/InputConnectionAdaptor(13266): The input method toggled cursor monitoring off 
+D/InputConnectionAdaptor(13266): The input method toggled cursor monitoring on  
+D/InsetsController(13266): show(ime(), fromIme=true)
+D/InsetsController(13266): show(ime(), fromIme=true)
+I/Quality (13266): Skipped: false 1 cost 18.528208 refreshRate 0 processName com.example.movil2
+I/flutter (13266): ThemeProvider: Actualizando tema desde AuthProvider. User: null
+I/flutter (13266): ThemeProvider: Tema ya está sincronizado.
+I/flutter (13266): main.dart: Auth está cargando, mostrando SplashScreen.       
+D/InputConnectionAdaptor(13266): The input method toggled cursor monitoring off 
+I/flutter (13266): AuthService(Login) Error: {detail: La combinación de credenciales no tiene una cuenta activa}        
+E/flutter (13266): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: setState() called after dispose(): _LoginScreenState#88da1(lifecycle state: defunct, not mounted)
+E/flutter (13266): This error happens if you call setState() on a State object for a widget that no longer appears in the widget tree (e.g., whose parent widget no longer includes the widget in its build). This error can occur when code calls setState() from a timer or an animation callback.
+E/flutter (13266): The preferred solution is to cancel the timer or stop listening to the animation in the dispose() callback. Another solution is to check the "mounted" property of this object before calling setState() to ensure the object is still in the tree.
+E/flutter (13266): This error might indicate a memory leak if setState() is being called because another object is retaining a reference to this State object after it has been removed from the tree. To avoid memory leaks, consider breaking the reference to this object during dispose().
+E/flutter (13266): #0      State.setState.<anonymous closure> (package:flutter/src/widgets/framework.dart:1163:9)       
+E/flutter (13266): #1      State.setState (package:flutter/src/widgets/framework.dart:1198:6)
+E/flutter (13266): #2      _LoginScreenState._submitLogin (package:movil/screens/auth/login_screen.dart:37:7)
+E/flutter (13266): <asynchronous suspension>
+E/flutter (13266):
+I/flutter (13266): ThemeProvider: Actualizando tema desde AuthProvider. User: null
+I/flutter (13266): ThemeProvider: Tema ya está sincronizado.
+I/flutter (13266): main.dart: No autenticado, mostrando LoginScreen.
+I/Quality (13266): Skipped: false 1 cost 28.989813 refreshRate 0 processName com.example.movil2
+D/InputMethodManager(13266): showSoftInput() view=io.flutter.embedding.android.FlutterView{6482eb1 VFE...... .F...... 0,0-1080,2358 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+D/InputConnectionAdaptor(13266): The input method toggled cursor monitoring on  
+D/InsetsController(13266): show(ime(), fromIme=true)
+D/InputMethodManager(13266): showSoftInput() view=io.flutter.embedding.android.FlutterView{6482eb1 VFE...... .F...... 0,0-1080,2358 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+I/Quality (13266): Skipped: false 2 cost 33.53966 refreshRate 0 processName com.example.movil2
+D/InputConnectionAdaptor(13266): The input method toggled cursor monitoring on  
+D/InputConnectionAdaptor(13266): The input method toggled cursor monitoring off 
+D/InputConnectionAdaptor(13266): The input method toggled cursor monitoring on  
+D/InsetsController(13266): show(ime(), fromIme=true)
+D/InsetsController(13266): show(ime(), fromIme=true)
+I/Quality (13266): Skipped: false 1 cost 24.325377 refreshRate 0 processName com.example.movil2
+I/flutter (13266): ThemeProvider: Actualizando tema desde AuthProvider. User: null
+I/flutter (13266): ThemeProvider: Tema ya está sincronizado.
+I/flutter (13266): main.dart: Auth está cargando, mostrando SplashScreen.       
+D/InputConnectionAdaptor(13266): The input method toggled cursor monitoring off 
+I/flutter (13266): AuthProvider: Permisos cargados: 10
+I/flutter (13266): User granted permission: AuthorizationStatus.authorized      
+I/flutter (13266): FCM Token: cz87SSfGTSanHQwh9QD-Vc:APA91bGxMwXG3HvnPXZtV2DektugHO_Bhqbk2TfDLgxvcqw0H0JBl-jMt2gYmCbmtjJzy9iyofTxryksVxRuB5q7ddOgT3G6FHTXs4gNtAg6Lzo3Th6Ml8M
+I/flutter (13266): Logging action: {accion: UPDATE: FCMToken, payload: {fcm_token: cz87SSfGTSanHQwh9QD-Vc:APA91bGxMwXG3HvnPXZtV2DektugHO_Bhqbk2TfDLgxvcqw0H0JBl-jMt2gYmCbmtjJzy9iyofTxryksVxRuB5q7ddOgT3G6FHTXs4gNtAg6Lzo3Th6Ml8M}}
+I/flutter (13266): Failed to log action: DioException [bad response]: This exception was thrown because the response has a status code of 400 and RequestOptions.validateStatus was configured to throw for this status code.
+I/flutter (13266): The status code of 400 has the following meaning: "Client error - the request contains bad syntax or cannot be fulfilled"
+I/flutter (13266): Read more about status codes at https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+I/flutter (13266): In order to resolve this exception you typically have either to verify and fix your request code or you have to fix the server code.
+I/flutter (13266):
+I/flutter (13266): AuthProvider: FCM token sent to backend.
+I/flutter (13266): ThemeProvider: Actualizando tema desde AuthProvider. User: elvis
+I/flutter (13266): ThemeProvider: Tema actualizado. Notificando...
+I/flutter (13266): main.dart: Autenticado, mostrando HomeScreen.
+I/flutter (13266): DEBUG: HomeScreen initState()
+I/flutter (13266): DEBUG: didChangeDependencies() - Procesando ruta inicial por primera vez.
+I/flutter (13266): DEBUG: didChangeDependencies() - No se encontraron argumentos de ruta para 'initialModule'.
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'dashboard'       
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'dashboard'       
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'dashboard'       
+I/flutter (13266): API Service: Raw response data from /notificaciones/: {count: 46, next: http://192.168.3.37:8000/api/notificaciones/?page=2, previous: null, results: [{id: caf816e1-c7ab-4cef-ac8c-09d70b5e9f45, timestamp: 2025-11-23T23:37:16.028664-04:00, mensaje: Se te ha asignado una tarea de mantenimiento (Correctivo) para el activo 'Laptop'., tipo: INFO, leido: true, url_destino: /app/mantenimientos, tipo_display: Info}, {id: 8be4bdfd-d624-4733-a296-bd6c5db4243d, timestamp: 2025-11-23T23:11:15.951715-04:00, mensaje: Se te ha asignado una tarea de mantenimiento (Preventivo) para el activo 'Impresora'., tipo: INFO, leido: true, url_destino: /app/mantenimientos, tipo_display: Info}, {id: 9694986a-ad68-4023-ba1e-72ef9c31b85b, timestamp: 2025-11-23T22:44:48.848440-04:00, mensaje: Se te ha asignado una tarea de mantenimiento (Correctivo) para el activo 'Servidor de Alto Rendimiento Dell PowerEdge R740'., tipo: INFO, leido: true, url_destino: /app/mantenimientos, tipo_display: Info}, {id: a8705dde-0db0-4aa8-bf29-7ae12a051c7d, t
+I/flutter (13266): Notifications fetched: 20, Unread: 0
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'dashboard'       
+D/OplusSystemUINavigationGesture(13266): [GESTURE_BUTTON] swipe from 0
+D/OplusSystemUINavigationGesture(13266): [GESTURE_BUTTON] Hit Gesture Region !  
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'dashboard'       
+I/flutter (13266): DEBUG: _onNavigate() - Solicitado navegar a: 'mantenimientos'
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'dashboard'       
+I/flutter (13266): DEBUG: _onNavigate() - Ejecutando setState para cambiar a: 'mantenimientos'
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'mantenimientos'  
+Another exception was thrown: There
+should be exactly one item with
+[DropdownButton]'s value: PENDIENTE.    
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'mantenimientos'  
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'mantenimientos'  
+Another exception was thrown: There
+should be exactly one item with
+[DropdownButton]'s value: PENDIENTE.    
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'mantenimientos'  
+I/Quality (13266): Skipped: false 5 cost 99.426796 refreshRate 0 processName com.example.movil2
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'mantenimientos'  
+Another exception was thrown: There
+should be exactly one item with
+[DropdownButton]'s value: PENDIENTE.    
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'mantenimientos'  
+D/OplusSystemUINavigationGesture(13266): [GESTURE_BUTTON] swipe from 1
+D/OplusSystemUINavigationGesture(13266): [GESTURE_BUTTON] Hit Gesture Region !  
+D/OplusSystemUINavigationGesture(13266): [GESTURE_BUTTON] trigger!
+D/Activity(13266): dispatchKeyEvent to com.example.movil2.MainActivity@4894a28 will call onBackPressed
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'mantenimientos'  
+Another exception was thrown: setState()
+or markNeedsBuild() called during build.
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'mantenimientos'  
+I/flutter (13266): API Service: Raw response data from /empleados/: {count: 3, next: null, previous: null, results: [{id: 6b3c0dfa-8a4f-46d6-87e1-5897a6db9260, usuario: {id: 5, username: juan, first_name: Juan, last_name: Perez, email: juan@gmail.com}, ci: 14785, apellido_p: Perez, apellido_m: Lopez, direccion: Santa Cruz de la Sierra, telefono: 7481296, sueldo: 2500.00, cargo: null, departamento: c76cae28-49f0-4dad-8e1e-d0beecdba90c, foto_perfil: http://192.168.3.37:8000/media/tenant_41a9cbf0-7556-4da9-b6af-8884c50f6506/fotos_perfil/filosofo.jpg, theme_preference: dark, theme_custom_color: #6366F1, theme_glow_enabled: false, roles: [c6f5fcac-3270-444a-a422-f69f8d2f93fc], cargo_nombre: null, departamento_nombre: TI, roles_asignados: [{id: c6f5fcac-3270-444a-a422-f69f8d2f93fc, nombre: Jefe, permisos: [{id: 8ad791cc-a493-4740-b9ba-4c1112e53709, nombre: view_dashboard, descripcion: Ver el Dashboard principal}, {id: 789ba03b-b9bc-4318-a701-94e565a80c62, nombre: view_activofijo, descripcion: Ver la lista de activos fijos}, {id: 9b5
+Another exception was thrown: A
+RenderFlex overflowed by 200 pixels on  
+the right.
+I/flutter (13266): API Service: Raw response data from /activos-fijos/: {count: 8, next: null, previous: null, results: [{id: 53ea3f0c-ced0-41de-a298-93b00e228a1e, nombre: Laptop Dell XPS 15, codigo_interno: INNO-LT-001, fecha_adquisicion: 2025-01-10, valor_actual: 4000.00, vida_util: 3, foto_activo: http://192.168.3.37:8000/media/tenant_41a9cbf0-7556-4da9-b6af-8884c50f6506/fotos_activos/teclado.jpg, categoria_nombre: Laptops, estado_nombre: Nuevo, ubicacion_nombre: Piso 3 - Oficina TI, departamento_nombre: Finanzas, proveedor_nombre: null, orden_compra: null}, {id: b2a861fa-22d1-4312-ad97-d9205094da14, nombre: Mesa de Oficina para Gerencia, codigo_interno: ACT-07AE6341, fecha_adquisicion: 2025-11-19, valor_actual: 500.00, vida_util: 5, foto_activo: null, categoria_nombre: Muebles, estado_nombre: Nuevo, ubicacion_nombre: Piso 3 - Oficina TI, departamento_nombre: TI, proveedor_nombre: Mueblerias, orden_compra: 07ae6341-127c-4443-95be-278293a1d905}, {id: 8cf7faa0-bc6d-4c79-96a2-22c28f11b9b9, nombre: PC GAMER, codigo_interno: ACT
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'mantenimientos'  
+Another exception was thrown: There
+should be exactly one item with
+[DropdownButton]'s value: PENDIENTE.    
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'mantenimientos'  
+I/Quality (13266): Skipped: false 6 cost 114.12016 refreshRate 0 processName com.example.movil2
+E/flutter (13266): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: Null check operator used on a null value
+E/flutter (13266): #0      _MantenimientoScreenState._showEmployeeUpdateDialog.<anonymous closure>.<anonymous closure>.<anonymous closure> (package:movil/screens/mantenimiento/mantenimiento_screen.dart:274:45)
+E/flutter (13266): #1      _InkResponseState.handleTap (package:flutter/src/material/ink_well.dart:1203:21)
+E/flutter (13266): #2      GestureRecognizer.invokeCallback (package:flutter/src/gestures/recognizer.dart:345:24)       
+E/flutter (13266): #3      TapGestureRecognizer.handleTapUp (package:flutter/src/gestures/tap.dart:737:11)
+E/flutter (13266): #4      BaseTapGestureRecognizer._checkUp (package:flutter/src/gestures/tap.dart:362:5)
+E/flutter (13266): #5      BaseTapGestureRecognizer.handlePrimaryPointer (package:flutter/src/gestures/tap.dart:293:7)  
+E/flutter (13266): #6      PrimaryPointerGestureRecognizer.handleEvent (package:flutter/src/gestures/recognizer.dart:706:9)
+E/flutter (13266): #7      PointerRouter._dispatch (package:flutter/src/gestures/pointer_router.dart:97:12)
+E/flutter (13266): #8      PointerRouter._dispatchEventToRoutes.<anonymous closure> (package:flutter/src/gestures/pointer_router.dart:143:9)
+E/flutter (13266): #9      _LinkedHashMapMixin.forEach (dart:_compact_hash:764:13)
+E/flutter (13266): #10     PointerRouter._dispatchEventToRoutes (package:flutter/src/gestures/pointer_router.dart:141:18)
+E/flutter (13266): #11     PointerRouter.route (package:flutter/src/gestures/pointer_router.dart:131:7)
+E/flutter (13266): #12     GestureBinding.handleEvent (package:flutter/src/gestures/binding.dart:530:19)
+E/flutter (13266): #13     GestureBinding.dispatchEvent (package:flutter/src/gestures/binding.dart:499:22)
+E/flutter (13266): #14     RendererBinding.dispatchEvent (package:flutter/src/rendering/binding.dart:473:11)
+E/flutter (13266): #15     GestureBinding._handlePointerEventImmediately (package:flutter/src/gestures/binding.dart:437:7)
+E/flutter (13266): #16     GestureBinding.handlePointerEvent (package:flutter/src/gestures/binding.dart:394:5)
+E/flutter (13266): #17     GestureBinding._flushPointerEventQueue (package:flutter/src/gestures/binding.dart:341:7)     
+E/flutter (13266): #18     GestureBinding._handlePointerDataPacket (package:flutter/src/gestures/binding.dart:308:9)    
+E/flutter (13266): #19     _invoke1 (dart:ui/hooks.dart:347:13)
+E/flutter (13266): #20     PlatformDispatcher._dispatchPointerDataPacket (dart:ui/platform_dispatcher.dart:467:7)       
+E/flutter (13266): #21     _dispatchPointerDataPacket (dart:ui/hooks.dart:282:31)
+E/flutter (13266):
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'mantenimientos'  
+D/OplusSystemUINavigationGesture(13266): [GESTURE_BUTTON] swipe from 0
+D/OplusSystemUINavigationGesture(13266): [GESTURE_BUTTON] Hit Gesture Region !  
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'mantenimientos'  
+I/flutter (13266): DEBUG: HomeScreen build() - Página actual: 'mantenimientos' 
